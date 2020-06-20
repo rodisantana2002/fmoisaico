@@ -1,0 +1,16 @@
+{
+  "name": "Projeto Siga-logs ",
+  "description": "Projeto de Rodolfo Santana como conclusão do curso Codanation",
+  "keywords": [
+    "flask",
+    "python",
+    "siga-logs"
+  ],
+  "repository": "https://github.com/rodisantana2002/fmoisaico.git",
+  "scripts": {
+    "postdeploy": "python -c 'from app import db; db.create_all()'"
+  },
+  "addons": [
+    "heroku-postgresql"
+  ]
+}
