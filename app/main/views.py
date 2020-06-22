@@ -18,7 +18,7 @@ def index():
     # if 'email' in session:
     #     return redirect(url_for('views.home'))
     # else:
-    return render_template('index.html', page=None)
+    return render_template('login.html', page=None)
 
 
 # @views.route('/home', methods=['GET', 'POST'])
@@ -57,12 +57,12 @@ def index():
 #     return result.get("code")
 
 
-# @views.route('/recuperasenha', methods=['GET'])
-# def recuperar_senha():
-#     if 'email' in session:
-#         return redirect(url_for('views.home'))
-#     else:
-#         return render_template('recuperasenha.html', page=None)
+@views.route('/recuperasenha', methods=['GET'])
+def recuperar_senha():
+    if 'email' in session:
+        return redirect(url_for('views.home'))
+    else:
+        return render_template('recuperasenha.html', page=None)
 
 
 # @views.route('/recuperasenha/envio', methods=['POST'])
@@ -102,12 +102,12 @@ def index():
 #             return render_template('login.html', page=result)
 
 
-# @views.route('/registro', methods=['GET'])
-# def cadastro():
-#     if 'email' in session:
-#         return redirect(url_for('views.home'))
-#     else:
-#         return render_template('registro.html', page=None)
+@views.route('/registro', methods=['GET'])
+def cadastro():
+    if 'email' in session:
+        return redirect(url_for('views.home'))
+    else:
+        return render_template('registro.html', page=None)
 
 
 # @views.route('/registro/envio', methods=['POST'])
