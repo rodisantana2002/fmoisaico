@@ -1,0 +1,29 @@
+
+flask-bootstrap="*"
+
+
+flask = "*"
+flask-sqlalchemy = "*"
+flask-bootstrap="*"
+flask-mail="*"
+flask-views="*"
+flask-moment="*"
+flask-wtf="*"
+flask-login="*"
+Flask-Migrate="*"
+Flask-Script="*"
+
+requests="*"
+retrying="*"
+retry="*"
+urllib3="*"
+
+itsdangerous="*"
+python-dateutil="*"
+SQLAlchemy="*"
+Werkzeug="*"
+WTForms="*"
+"psycopg2" = "*"
+gunicorn = "*"
+Jinja2 = "*"
+
