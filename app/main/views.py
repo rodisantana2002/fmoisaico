@@ -18,7 +18,7 @@ def index():
     # if 'email' in session:
     #     return redirect(url_for('views.home'))
     # else:
-    return render_template('login.html', page=None)
+    return render_template('index.html', page=None)
 
 
 # @views.route('/home', methods=['GET', 'POST'])
