@@ -1,40 +1,23 @@
 from enum import Enum
 
 
-class tipo(Enum):
-    Fisica = "Fisica"
-    Juridica = "Jurídica"
-
-
 class genero(Enum):
     Masculino = "M"
     Feminino = "F"
     Outro = "O"
 
 
-class situacaoPessoa(Enum):
-    Ativa = "Ativa"
-    Inativa = "Inativa"
+class tipo(Enum):
+    Erro = "ERROR"
+    Aviso = "INFO"
+    Atencao = "WARNING"
+    
+class Sistema(Enum):    
+    FrontEnd = "FRONTEND"
+    BackEnd = "BACKEND"
+    API = "API"
+    Mobile = "MOBILE"
+    Desktop = "DESKTOP"
+    IOT = "IOT"
 
 
-class situacaoUsuario(Enum):
-    Ativo = "Ativo"
-    Inativo = "Inativo"
-    Bloqueado = "Bloqueado"
-
-
-class tipoCanal(Enum):
-    Telefone = "telefone"
-    Email = "email"
-    Chat = "chat-Online"
-    Facebook = "facebook"
-    Linkedin = "linkedin"
-    Twitter = "twitter"
-    Site = "site"
-    WhatsApp = "whatsapp"
-    SMS = "SMS"
-
-
-class situacaoCanal(Enum):
-    Ativo = "Ativo"
-    Inativo = "Inativo"

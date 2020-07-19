@@ -13,7 +13,9 @@ operacoes = Blueprint("operacoes", __name__)
 class Operacoes():
 
     def __init__(self):
-        self.authentic = {"code": "", "msg": "", "email": "", "token": "", "nome": "", "id": "", "value": "", "superuser":""}
+        self.authentic = Authentic()
+        self.user  = Usuario()
+
         # self.associado = Associado()
         # self.tags = TagAssociado()
         # self.associado_categoria = AssociadoCategoria()

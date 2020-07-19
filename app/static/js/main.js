@@ -1,619 +1,359 @@
+//Validar Campos
+(function () {
+   'use strict';
+   window.addEventListener('load', function () {
+       // Fetch all the forms we want to apply custom Bootstrap validation styles to
+       var forms = document.getElementsByClassName('form-horizontal');
+       // Loop over them and prevent submission
+       var validation = Array.prototype.filter.call(forms, function (form) {
+           form.addEventListener('submit', function (event) {
+               if (form.checkValidity() === false) {
+                   event.preventDefault();
+                   event.stopPropagation();
+               }
+               form.classList.add('was-validated');
+           }, false);
+       });
+   }, false);
+})();
+
+
 $(document).ready(function () {
-   var url_base = "http://localhost:5000/";
+  var url_base = "http://localhost:5000/";
+//   var url_base = "https://resthouse.herokuapp.com/";
+//   var urlCEP = "https://viacep.com.br/ws/"
 
-//     // exibe alerta regsitro
-//     if ($("#registro-alerta").html() === "") {
-//         $("#registro-alerta").hide();
-//     } else {
-//         $("#registro-alerta").show();
-//     };
 
-//     $('table.display').DataTable({      
-//         "displayLength": 5
-//     });
 
-//     $('#dataTableProcessos').DataTable({
-//         "order":[[4, "desc"]]
-//     });
-    
-//     $('.custom-file-input').on('change', function () {
-//         let fileName = $(this).val().split('\\').pop();
-//         $(this).next('.custom-file-label').addClass("selected").html(fileName);
-//     });
+   if ($("#login-alerta").html() === "") {
+       $("#login-alerta").hide();
+   } else {
+       $("#login-alerta").show();
+   };
 
-//     // Carregar BibText
-//     $('#btn-bibtext-carregar').click(function (){
-//         if (validarDadosFileBib()) {
-//             var dialog = bootbox.dialog({
-//                 title: 'Atenção!',
-//                 message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i>Aguarde... processando arquivo...</div>',
-//                 closeButton:true,
-//                 centerVertical: true
-//             });
+   // exibe alerta regsitro
+   if ($("#registro-alerta").html() === "") {
+       $("#registro-alerta").hide();
+   } else {
+       $("#registro-alerta").show();
+   };
 
-//             dialog.init(function () {
-//                 setTimeout(function () {
-//                     // carrega conteudo do arquivo selecionado
-//                     jQuery.get(url_base + url_files_bib + $("#name-file-bibtext").val().split('\\').pop(),
-//                     function (data) {
-//                         conteudo = data;
-//                         $.ajax({
-//                             type: "POST",
-//                             url: url_base + "referencia/importar/file",
-//                             data: {
-//                                 bibText: conteudo
-//                             },
-//                             async: true,
-//                             success: function (result) {
-//                                 if (result === "200") {
-//                                     location.reload();
-//                                 }
-//                                 else {
-//                                     dialog.find('.bootbox-body').html("Não foi possível processar a importação!");
-//                                 }
-//                             }
-//                         });
-//                     }
-//                     );            
-            
-//                 }, 1);
-//             });
+   // exibe alerta envioemail
+   if ($("#recupera-senha").html() === "") {
+       $("#recupera-senha").hide();
+   } else {
+       $("#recupera-senha").show();
+   };
 
-//         }    
-//         else {
-//             bootbox.alert({
-//                 message: "Selecione um arquivo",
-//                 size: 'small',
-//                 centerVertical:true
-//             });          
-//             $("#name-file-bibtext").focus();
-//         }
-//     });
 
-//     $(".btn-referencia-remover").click(function (){
-//         var referencia = jQuery.parseJSON($(this).val());
-        
-//         bootbox.confirm({
-//             message: "Confirma a remoção da Referência?",
-//             size: "small",
-//             centerVertical: true,
-//             buttons: {
-//                 confirm: {
-//                     label: 'Sim',
-//                     label: '<i class="fa fa-check"></i> Confirm',
-//                     className: 'btn-success'
-//                 },
-//                 cancel: {
-//                     label: 'Não',
-//                     label: '<i class="fa fa-times"></i> Cancel',
-//                     className: 'btn-danger'
-//                 }
-//             },
+   $("#btn-dados").click(function(){
+       $("#paneDados").show();
+       $("#paneSenha").hide();
+       $("#paneMenu").hide();
+   });
+   
+   $("#btn-senha").click(function(){
+       $("#paneDados").hide();
+       $("#paneSenha").show();
+       $("#paneMenu").hide();        
+   });
 
-//             callback: function (result) {
-//                 if (result) {
-//                     var dialog = bootbox.dialog({
-//                         message: '<p class="text-center mb-0"><i class="fa fa-spin fa-cog"></i> Aguarde... processando exclusão...</p>',
-//                         centerVertical: true,
-//                         closeButton: true
-//                     });
+   $("#btnSalvarDados").click(function(){
+       if (validarDados()){
+           $.ajax({
+               type: "POST",
+               url: url_base + "perfil/atualizar",
+               data:{nomecompleto: $("#nomecompleto").val(),
+                     celular: $("#celular").val(),
+                     dtnascimento: $("#dtnascimento").val(),
+                     sexo: $("#sexo").val(),
+                     cep: $("#cep").val(),
+                     logradouro: $("#logradouro").val(),
+                     numero: $("#numero").val(),
+                     complemento: $("#complemento").val(),
+                     bairro: $("#bairro").val(),
+                     cidade: $("#cidade").val(),
+                     estado: $("#estado").val()
+                   },
+               async: false,
+               success: function (data) { 
+                   $(location).attr('href', url_base + 'perfil');
+               }
+           });     
+       }        
+   });
 
-//                     dialog.init(function () {
-//                         setTimeout(function () {
-//                         //processa a exlusão dos dados do processo
-//                             $.ajax({
-//                                 type: "POST",
-//                                 data: { id: referencia.id },
-//                                 url: url_base + "referencia/remover",
-//                                 async: true,
-//                                 success: function (data) {
-//                                     if (data === "200") {
-//                                         location.reload();
-//                                     }
-//                                     else {
-//                                         dialog.find('.bootbox-body').html("Não foi possível excluir o registro!");
-//                                     }
-//                                 }
-//                             });
+   // $("#btnSalvarSenha").click(function(){
+   //     if(validarSenha()){
+   //         $.ajax({
+   //             type: "POST",
+   //             url: url_base + "perfil/acesso",
+   //             data:{senhaAtual: $("#senhaAtual").val(), senha: $("#senha").val()},
+   //             async: false,
+   //             success: function (data) {
+   //                 if (data==="403"){
+   //                     bootbox.alert({
+   //                         message: "Senha atual não confere!",
+   //                         size: 'small'
+   //                     });                        
+   //                     $("#senhaAtual").focus();                        
+   //                 }
+   //                 else{
+   //                     bootbox.alert({
+   //                         message: "Senha alterada com sucesso!",
+   //                         size: 'small'
+   //                     });                        
+   //                     $("#senhaAtual").val("");
+   //                     $("#senha").val(""),
+   //                     $("#resenha").val("");
+   //                 }
+   //             }
+   //         });     
+   //     }        
+   // });
+   $("#btn-signup").click(function () {
+       if (validar()) {
+           $.ajax({
+               type: "POST",
+               url: url_base + "registro/envio",
+               data:{nomecompleto: $("#nomecompleto").val(),
+                   email: $("#email").val(),
+                   celular: $("#celular").val(),
+                   dtnascimento: $("#dtnascimento").val(),
+                   sexo: $("#sexo").val(),
+                   senha: $("#senha").val()
+                   },
+               async: false,
+               success: function (data) { 
+                   bootbox.alert({
+                       message: "Registro efetuado com sucesso",
+                       size: 'small'
+                   });    
 
-//                         }, 1);
-//                     });
+                   $("#nomecompleto").val("");
+                   $("#email").val("");
+                   $("#celular").val("");
+                   $("#dtnascimento").val("");
+                   $("#sexo").val("Sexo *");
+                   $("#senha").val("");
+                   $("#resenha").val("");
+               }
+           });            
+       }
+   });
 
-//                 }
-//             }
-//         });    
-//     });
+   // $("#btn-enviar-email").click(function () {
+   //     if (validaremail()) {
+   //         $("#recuperaform").submit();
+   //     }
+   // });
 
-//     // reprovar referencia
-//     $(".btn-referencia-reprovar").click(function () {
-//         var referencia = jQuery.parseJSON($(this).val());
-
-//         bootbox.confirm({
-//             message: "Confirma a reprovação da Referência?",
-//             size: "small",
-//             centerVertical: true,
-//             buttons: {
-//                 confirm: {
-//                     label: 'Sim',
-//                     label: '<i class="fa fa-check"></i> Confirm',
-//                     className: 'btn-success'
-//                 },
-//                 cancel: {
-//                     label: 'Não',
-//                     label: '<i class="fa fa-times"></i> Cancel',
-//                     className: 'btn-danger'
-//                 }
-//             },
-
-//             callback: function (result) {
-//                 if (result) {
-//                     var dialog = bootbox.dialog({
-//                         message: '<p class="text-center mb-0"><i class="fa fa-spin fa-cog"></i> Aguarde... processando exclusão...</p>',
-//                         centerVertical: true,
-//                         closeButton: true
-//                     });
-
-//                     dialog.init(function () {
-//                         setTimeout(function () {
-//                             //processa a exlusão dos dados do processo
-//                             $.ajax({
-//                                 type: "POST",
-//                                 data: { id: referencia.id },
-//                                 url: url_base + "referencia/reprovar",
-//                                 async: false,
-//                                 success: function (data) {
-//                                     if (data === "200") {
-//                                         location.reload();
-//                                     }
-//                                     else {
-//                                         dialog.find('.bootbox-body').html("Não foi possível atualizar a situação da referência!");
-//                                     }
-//                                 }
-//                             });
-
-//                         }, 1);
-//                     });
-
-//                 }
-//             }
-//         }); 
-
-//     });
-
-//     // aprovar referencia
-//     $(".btn-referencia-aprovar").click(function () {
-//         var referencia = jQuery.parseJSON($(this).val());
-
-//         bootbox.confirm({
-//             message: "Confirma a aprovação da Referência?",
-//             size: "small",
-//             centerVertical: true,
-//             buttons: {
-//                 confirm: {
-//                     label: 'Sim',
-//                     label: '<i class="fa fa-check"></i> Confirm',
-//                     className: 'btn-success'
-//                 },
-//                 cancel: {
-//                     label: 'Não',
-//                     label: '<i class="fa fa-times"></i> Cancel',
-//                     className: 'btn-danger'
-//                 }
-//             },
-
-//             callback: function (result) {
-//                 if (result) {
-//                     var dialog = bootbox.dialog({
-//                         message: '<p class="text-center mb-0"><i class="fa fa-spin fa-cog"></i> Aguarde... processando exclusão...</p>',
-//                         centerVertical: true,
-//                         closeButton: true
-//                     });
-
-//                     dialog.init(function () {
-//                         setTimeout(function () {
-//                             //processa a exlusão dos dados do processo
-//                             $.ajax({
-//                                 type: "POST",
-//                                 data: { id: referencia.id },
-//                                 url: url_base + "referencia/aprovar",
-//                                 async: false,
-//                                 success: function (data) {
-//                                     if (data === "200") {
-//                                         location.reload();
-//                                     }
-//                                     else {
-//                                         dialog.find('.bootbox-body').html("Não foi possível atualizar a situação da referência!");
-//                                     }
-//                                 }
-//                             });
-
-//                         }, 1);
-//                     });
-
-//                 }
-//             }
-//         });
-
-//     });
-
-//     // exibe popup com detalhes da referencia
-//     $(".btn-referencia-detail").click(function () {
-//         var referencia = jQuery.parseJSON($(this).val());
-//         bootbox.alert({
-//             message: "<p> Titulo: <br>" + referencia.titulo + "</p>" +
-//                 "<p> Resumo: <br>" + referencia.resumo + "</p>" + 
-//                 "<p> Autor(es): " + referencia.autores + "</p>",
-//             size: 'large',
-//             centerVertical: true
-//         });
-//     });
 
   
-//     $("#btn-referencia-importar").click(function (){
+   // functions
+   function validaremail() {
+       var msg = "O campo deve ser informado!"
 
-//         bootbox.confirm({
-//             message: "Confirma a importação da(s) Referência(s)?",
-//             size: "small",
-//             centerVertical: true,
-//             buttons: {
-//                 confirm: {
-//                     label: 'Sim',
-//                     label: '<i class="fa fa-check"></i> Confirm',
-//                     className: 'btn-success'
-//                 },
-//                 cancel: {
-//                     label: 'Não',
-//                     label: '<i class="fa fa-times"></i> Cancel',
-//                     className: 'btn-danger'
-//                 }
-//             },
+       if ($("#email-recuperar").val().trim().length === 0) {
+           $("#recupera-senha").html(msg);
+           $("#recupera-senha").show();
+           $("#email-recuperar").focus();
+           return false;
+       }
 
-//             callback: function (result) {
-//                 if (result) {
-//                     var dialog = bootbox.dialog({
-//                         message: '<p class="text-center mb-0"><i class="fa fa-spin fa-cog"></i> Aguarde... processando importação...</p>',
-//                         centerVertical: true,
-//                         closeButton: true
-//                     });
-
-//                     dialog.init(function () {
-//                         setTimeout(function () {
-//                         //processa a importação dos dados do processo
-//                             $.ajax({
-//                                 type: "POST",
-//                                 url: url_base + "referencia/importar",
-//                                 data: {
-//                                     situacaoOld: 'Pendente',
-//                                     situacaoNew: 'Ativa'
-//                                 },
-//                                 async: false,
-//                                 success: function (data) {
-//                                     if (data === "200") {
-//                                         location.reload();
-//                                     }
-//                                     else {
-//                                         dialog.find('.bootbox-body').html("Não foi possível importar o(s) registro(s)!");
-//                                     }
-//                                 }
-//                             });
-//                         }, 1);
-//                     });
-//                 }
-//             }
-//         });        
-//     });
-
-// // ---------------------------------------------------------
+       if (!validateEmail($("#email-recuperar").val())) {
+           $("#recupera-senha").html("Email não esta no formato válido!");
+           $("#recupera-senha").show();
+           $("#email-recuperar").focus();
+           return false;
+       }
+       return true;
+   }
 
 
-//     // registrar processo
-//     $("#btn-processo-enviar").click(function () {
-//         if (validarDadosProcesso()) {
-//             $.ajax({
-//                 type: "POST",
-//                 url: url_base + "processo/registro",
-//                 data: {
-//                     descricao: $("#descricao").val(),
-//                     objetivo: $("#objetivo").val()
-//                 },
-//                 async: false,
-//                 success: function (data) {
-//                     $(location).attr('href', url_base + 'processo');
-//                 }
-//             });
-//         }
-//     });    
+   function validateEmail(email) {
+       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+       return re.test(String(email).toLowerCase());
+   }
 
-//     // remover processo
-//     $(".btn-processo-remover").click(function (){
-//         var processo = jQuery.parseJSON($(this).val());
-        
-//         bootbox.confirm({
-//             message: "Confirma a remoção do Processo?",
-//             size: "small",
-//             centerVertical: true,
-//             buttons: {
-//                 confirm: {
-//                     label: 'Sim',
-//                     label: '<i class="fa fa-check"></i> Confirm',
-//                     className: 'btn-success'
-//                 },
-//                 cancel: {
-//                     label: 'Não',
-//                     label: '<i class="fa fa-times"></i> Cancel',
-//                     className: 'btn-danger'
-//                 }
-//             },
+   function email_exist(email) {
+       $.get("validaremail/" + email,
+           function (result) {
+               if (result === "404") {
+                   $("#registro-alerta").html("Ops! Esse email já esta sendo utilizado por outro usuário!");
+                   $("#registro-alerta").show();
+                   $("#email").focus();
+                   return true;
+               };
+               return false;
+           });
+   }
 
-//             callback: function (result) {
-//                 if (result) {
-//                     var dialog = bootbox.dialog({
-//                         message: '<p class="text-center mb-0"><i class="fa fa-spin fa-cog"></i> Aguarde... processando exclusão...</p>',
-//                         centerVertical: true,
-//                         closeButton: true
-//                     });
-
-//                     dialog.init(function () {
-//                         setTimeout(function () {
-//                         //processa a exlusão dos dados do processo
-//                             $.ajax({
-//                                 type: "POST",
-//                                 data: { id: processo.id },
-//                                 url: url_base + "processo/remover",
-//                                 async: true,
-//                                 success: function (data) {
-//                                     if (data === "200") {
-//                                         location.reload();
-//                                     }
-//                                     else {
-//                                         dialog.find('.bootbox-body').html("Não foi possível excluir o registro!");
-//                                     }
-//                                 }
-//                             });
-
-//                         }, 1);
-//                     });
-
-//                 }
-//             }
-//         });    
-//     });
-
-//     // adicionar arquivo ao processo
-//     $("#btn-arquivo-adicionar").click(function () {
-//         var processo = jQuery.parseJSON($(this).val());
-
-//         if (validarDadosFile()) {
-//             var dialog = bootbox.dialog({
-//                 title: 'Atenção!',
-//                 message: '<div class="text-center"><i class="fa fa-spin fa-spinner"></i>Aguarde... processando arquivo...</div>',
-//                 closeButton:true,
-//                 centerVertical: true
-//             });
-
-//             dialog.init(function () {
-//                 setTimeout(function () {
-//                     // carrega conteudo do arquivo selecionado
-//                     jQuery.get(url_base + url_files_txt + $("#name-file").val().split('\\').pop(),
-//                         function (data) {
-//                             conteudo = data;
-//                             $.ajax({
-//                                 type: "POST",
-//                                 url: url_base + "processo/arquivo",
-//                                 data: {
-//                                     name_file: $("#name-file").val().split('\\').pop().toLowerCase(),
-//                                     processo_id: processo.id,
-//                                     conteudo: conteudo
-//                                 },
-//                                 async: true,
-//                                 success: function (data) {                                   
-//                                     if (data === "200") {
-//                                         $(location).attr('href', url_base + 'processo/' + processo.id);
-//                                     }
-//                                     else{
-//                                         dialog.find('.bootbox-body').html("Arquivo já esta registrado no processo!");
-//                                     }
-//                                 }
-//                             });
-//                         }
-//                     );            
-                    
-//                 }, 1);
-//             });
-            
-//         }    
-//         else {
-//             bootbox.alert({
-//                 message: "Selecione um arquivo",
-//                 size: 'small',
-//                 centerVertical:true
-//             });          
-//             $("#name-file").focus();
-//         }
-//     });
-
-//     //processamento da busca online das referencias
-//     $(".btn-arquivo-processar").click(function (){
-//         var file = jQuery.parseJSON($(this).val());
-        
-//         if (file.pendentes>0){
-//             var dialog = bootbox.dialog({
-//                 title: 'Atenção!',
-//                 message: '<div class="text-center"><i class="fa fa-spin fa-spinner fa-2x"></i><br>Aguarde... atualizando referências <br> Tempo Estimado [ ' + file.tempo + ' ]</div>',
-//                 closeButton: true,
-//                 centerVertical: true
-//             });
-    
-//             dialog.init(function () {
-//                 setTimeout(function () {
-//                     $.ajax({
-//                         type: "POST",
-//                         data: { id: file.id },
-//                         url: url_base + "processo/arquivo/processar",
-//                         async: true,
-//                         success: function (data) {
-//                             if (data === "200") {
-//                                 location.reload();
-//                             }
-//                             else {
-//                                 dialog.find('.bootbox-body').html("Não foi possível processar o arquivo");
-//                             }
-//                         }
-//                     });                    
-    
-//                 }, 1);
-//             });
-    
-//         }
-//         else{
-//             bootbox.alert({
-//                 message: "Não existem referências para serem processadas!",
-//                 size: 'large',
-//                 centerVertical:true
-//             }); 
-//         }
-
-//     });     
+   function celular_exist(celular) {
+       $.get("validarfone/" + celular,
+           function (result) {
+               if (result === "404") {
+                   $("#registro-alerta").html("Ops! Esse telefone celular já esta sendo utilizado por outro usuário!");
+                   $("#registro-alerta").show();
+                   $("#celular").focus();
+                   return true;
+               };
+               return false;
+           });
+   }
 
 
-//     // processa a remoção do arquivo selecionado
-//     $(".btn-arquivo-remover").click(function () {
-//         var file = jQuery.parseJSON($(this).val());
+   function validarSenha(){
+       var msg = "O campo deve ser informado!"        
 
-//         bootbox.confirm({
-//             message: "Confirma a remoção do Arquivo?",
-//             size: "small",
-//             centerVertical: true,
-//             buttons: {
-//                 confirm: {
-//                     label: 'Sim',
-//                     label: '<i class="fa fa-check"></i> Confirm',
-//                     className: 'btn-success'
-//                 },
-//                 cancel: {
-//                     label: 'Não',
-//                     label: '<i class="fa fa-times"></i> Cancel',
-//                     className: 'btn-danger'
-//                 }
-//             },
+       if ($("#senhaAtual").val().trim().length == 0) {
+           $("#registro-alerta-senha").html(msg);
+           $("#registro-alerta-senha").show();
+           $("#senhaAtual").focus();
+           return false;
+       }
 
-//             callback: function (result) {
-//                 if (result) {                    
-//                     $.ajax({
-//                         type: "POST",
-//                         data: { id: file.id },
-//                         url: url_base + "processo/arquivo/remover",
-//                         async: false,
-//                         success: function (data) {
-//                             if (data === "200") {
-//                                 location.reload();
-//                             }
-//                             else{    
-//                                 bootbox.alert({
-//                                     message: "Não foi possível excluir o registro",
-//                                     size: 'small'
-//                                 });
-//                             }                            
-//                         }
-//                     });                    
-//                 }
-//             }
-//         });           
+       if ($("#senha").val().trim().length == 0) {
+           $("#registro-alerta-senha").html(msg);
+           $("#registro-alerta-senha").show();
+           $("#senha").focus();
+           return false;
+       }
+       if ($("#senha").val().trim().length < 5) {
+           $("#registro-alerta-senha").html("A senha informada deve ter ao menos 5 caracteres");
+           $("#registro-alerta-senha").show();
+           $("#senha").focus();
+           return false;
+       }
+       if ($("#resenha").val().trim().length == 0) {
+           $("#registro-alerta-senha").html(msg);
+           $("#registro-alerta-senha").show();
+           $("#resenha").focus();
+           return false;
+       }
+       if ($("#senha").val().trim() != $("#resenha").val().trim()) {
+           $("#registro-alerta-senha").html("O valor não confere com a senha informada");
+           $("#registro-alerta-senha").show();
+           $("#resenha").focus();
+           return false;
+       }
 
-//     });
-    
-//     // exibe popup com detalhes da referencia
-//     $(".btn-referencia-file-detail").click(function () {
-//         var referencia = jQuery.parseJSON($(this).val());
-//         bootbox.alert({
-//             message: "<p> lin.: " + referencia.linha + "</p>" +
-//                 "<p> ref.: " + referencia.referencia + "</p>",
-//             size: 'large',
-//             centerVertical: true
-//         });
-//     });      
+      return true;
 
-//     // exclusão individual da referencia
-//     $(".btn-referencia-remove").click(function (){
-//         var referencia = jQuery.parseJSON($(this).val());        
+   }
 
-//         bootbox.confirm({
-//             message: "Confirma a remoção da Referência?",
-//             size: "small",
-//             centerVertical: true,
-//             buttons: {
-//                 confirm: {
-//                     label: 'Sim',
-//                     label: '<i class="fa fa-check"></i> Confirm',
-//                     className: 'btn-success'
-//                 },
-//                 cancel: {
-//                     label: 'Não',
-//                     label: '<i class="fa fa-times"></i> Cancel',
-//                     className: 'btn-danger'
-//                 }
-//             },
-//             callback: function (result) {
-//                 if (result) {
-//                     $.ajax({
-//                         type: "POST",
-//                         data: { id: referencia.id },
-//                         url: url_base + "processo/arquivo/referencia/remover",
-//                         async: false,
-//                         success: function (data) {
-//                             if (data !="200"){
-//                                 bootbox.alert({
-//                                     message: "Não foi possível excluir o registro",
-//                                     size: 'small'
-//                                 });  
-//                             }                            
-//                         }
-//                     });
-//                     location.reload();
-//                 }
-//             }
-//         });        
+   function validarDados() {
+       var msg = "O campo deve ser informado!"
 
-//     });
+       if ($("#nomecompleto").val().trim().length === 0) {
+           $("#registro-alerta").html(msg);
+           $("#registro-alerta").show();
+           $("#nomecompleto").focus();
+           return false;
+       }
+
+       if ($("#celular").val().trim().length === 0 || $("#celular").val().trim() === "() -") {
+           $("#registro-alerta").html(msg);
+           $("#registro-alerta").show();
+           $("#celular").focus();
+           return false;
+       }
+
+       if ($("#dtnascimento").val().trim().length == 0) {
+           $("#registro-alerta").html(msg);
+           $("#registro-alerta").show();
+           $("#dtnascimento").focus();
+           return false;
+       }
+
+       if ($("#sexo").val() === "Sexo *") {
+           $("#registro-alerta").html(msg);
+           $("#registro-alerta").show();
+           $("#sexo").focus();
+           return false;
+       }
+
+       return true;
+   }
 
 
-//     // **********************************************************************************************
-//     // FUNÇÔES
-//     // **********************************************************************************************
-//     // valida dados formulario processo
-//     function validarDadosProcesso() {
-//         var msg = "O campo deve ser informado!"
+   function validar() {
+       var msg = "O campo deve ser informado!"
 
-//         if ($("#descricao").val().trim().length === 0) {
-//             $("#registro-alerta").html(msg);
-//             $("#registro-alerta").show();
-//             $("#descricao").focus();
-//             return false;
-//         }
+       if ($("#nomecompleto").val().trim().length === 0) {
+           $("#registro-alerta").html(msg);
+           $("#registro-alerta").show();
+           $("#nomecompleto").focus();
+           return false;
+       }
 
-//         if ($("#objetivo").val().trim().length == 0) {
-//             $("#registro-alerta").html(msg);
-//             $("#registro-alerta").show();
-//             $("#objetivo").focus();
-//             return false;
-//         }
+       if ($("#email").val().trim().length === 0) {
+           $("#registro-alerta").html(msg);
+           $("#registro-alerta").show();
+           $("#email").focus();
+           return false;
+       }
 
-//         return true;
-//     }
+       if (!validateEmail($("#email").val())) {
+           $("#registro-alerta").html("Email não esta no formato válido!");
+           $("#registro-alerta").show();
+           $("#email").focus();
+           return false;
+       }
 
-//     // valida dados arquivo upload
-//     function validarDadosFile() {
-//         if ($("#name-file").val().trim().length === 0) {
-//             return false;
-//         }
-//         return true;
-//     }
+       if ($("#celular").val().trim().length === 0 || $("#celular").val().trim() === "() -") {
+           $("#registro-alerta").html(msg);
+           $("#registro-alerta").show();
+           $("#celular").focus();
+           return false;
+       }
 
-//     // valida dados arquivo upload - bibText
-//     function validarDadosFileBib() {
-//         if ($("#name-file-bibtext").val().trim().length === 0) {
-//             return false;
-//         }
-//         return true;
-//     }
+       if (celular_exist($("#celular").val())) {
+           return false;
+       }
+
+       if (email_exist($("#email").val())) {
+           return false;
+       }
+
+       if ($("#dtnascimento").val().trim().length == 0) {
+           $("#registro-alerta").html(msg);
+           $("#registro-alerta").show();
+           $("#dtnascimento").focus();
+           return false;
+       }
+
+       if ($("#sexo").val() === "Sexo *") {
+           $("#registro-alerta").html(msg);
+           $("#registro-alerta").show();
+           $("#sexo").focus();
+           return false;
+       }
+       if ($("#senha").val().trim().length == 0) {
+           $("#registro-alerta").html(msg);
+           $("#registro-alerta").show();
+           $("#senha").focus();
+           return false;
+       }
+       if ($("#senha").val().trim().length < 5) {
+           $("#registro-alerta").html("A senha informada deve ter ao menos 5 caracteres");
+           $("#registro-alerta").show();
+           $("#senha").focus();
+           return false;
+       }
+       if ($("#resenha").val().trim().length == 0) {
+           $("#registro-alerta").html(msg);
+           $("#registro-alerta").show();
+           $("#resenha").focus();
+           return false;
+       }
+       if ($("#senha").val().trim() != $("#resenha").val().trim()) {
+           $("#registro-alerta").html("O valor não confere com a senha informada");
+           $("#registro-alerta").show();
+           $("#resenha").focus();
+           return false;
+       }
+
+       return true;
+   }
 });

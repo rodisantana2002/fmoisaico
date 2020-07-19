@@ -14,20 +14,19 @@ app_dir = os.path.abspath(os.path.dirname(__file__))
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_mapping(SECRET_KEY=os.environ.get('SECRET_KEY') or 'key hesthouse')
+    app.config.from_mapping(SECRET_KEY=os.environ.get('SECRET_KEY') or 'key SigaLogs')
 
-    DATABASE_URL = os.environ.get('DATABASE_URL', 'sqlite:////home/rodolfosantana/Documentos/projetos/resthouse/app/bd/flask_app.db')
+    app.config['URL_BASE'] = 'https://imosaico.herokuapp.com'
     
     app.config['MEDIA_ROOT'] = os.path.join(app_dir, 'gallery/')
     
-    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 587
     app.config['MAIL_USERNAME'] = os.environ.get('GMAIL_USER') or 'papersrs2002@gmail.com'
     app.config['MAIL_PASSWORD'] = os.environ.get('GMAIL_PASSWORD') or 'ujlatqnjwmprumxd'
     app.config['MAIL_USE_TLS'] = True
     app.config['MAIL_USE_SSL'] = False
-    app.config['MAIL_DEFAULT_SENDER'] = 'resthouse.oficial@gmail.com'
+    app.config['MAIL_DEFAULT_SENDER'] = 'papersrs2002@gmail.com'
 
     app.register_blueprint(views)
     app.register_blueprint(auth)
@@ -35,6 +34,5 @@ def create_app():
     app.register_blueprint(operacoes)
 
     bootstrap = Bootstrap(app)
-    db.init_app(app)
 
     return app
