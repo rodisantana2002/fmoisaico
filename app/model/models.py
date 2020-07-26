@@ -173,7 +173,11 @@ class Authentic:
 
 
 
-
+class Dashboard:
+    def __init__(self, totalGeralLogs, totalPorSistema, totalPorTipo):
+        self.totalGeralLogs=totalGeralLogs        
+        self.totalPorSistema=totalPorSistema
+        self.totalPorTipo=totalPorTipo
 
 
 

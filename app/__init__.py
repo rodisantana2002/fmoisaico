@@ -17,6 +17,7 @@ def create_app():
     app.config.from_mapping(SECRET_KEY=os.environ.get('SECRET_KEY') or 'key SigaLogs')
 
     app.config['URL_BASE'] = 'https://imosaico.herokuapp.com'
+    app.config['URL_BASE_DES'] = 'localhost:5000'
     
     app.config['MEDIA_ROOT'] = os.path.join(app_dir, 'gallery/')
     

@@ -25,7 +25,8 @@ def index():
 def home():
     if 'email' in session:    
         nome = session.get("nome")
-        return render_template('index.html', nome=nome)
+        dashboard = oper.getDashboard(session.get("token"))
+        return render_template('index.html', nome=nome, dashboard=dashboard)
     else:
         return render_template('login.html', page=None)
 
@@ -55,7 +56,6 @@ def user():
         request.form['email-login'], request.form['password'])
 
     if 'email' in session:
-        print("aqui")                    
         return redirect(url_for('views.home'))
 
     else:

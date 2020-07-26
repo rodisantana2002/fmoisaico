@@ -1,8 +1,9 @@
 import os
 import string
-import csv
+import json, requests
+import jsonpickle
 
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, current_app
 from app.model.models import *
 from app.controls.utils import *
 from sqlalchemy import DateTime, func
@@ -13,54 +14,19 @@ operacoes = Blueprint("operacoes", __name__)
 class Operacoes():
 
     def __init__(self):
-        self.authentic = Authentic()
-        self.user  = Usuario()
+        self.authentic = {"code": "", "msg": "", "email": "", "token":"", "nome":"", "id": "", "value":"", "superuser":""}
+        self.user = Usuario()
 
-        # self.associado = Associado()
-        # self.tags = TagAssociado()
-        # self.associado_categoria = AssociadoCategoria()
-        # self.produtoTamanho = ProdutoTamanho()
-        # self.carrinho = Carrinho()
-        # self.pedido = Pedido()
-        # self.pedido_item = PedidoItem()
-        # self.pedido_avaliacao = PedidoAvaliacao()
-        # self.destino = 'app/bd/dados.csv' 
-        # self.FIELD_NAMES = ['pedido_id',
-        #                     'numero',
-        #                     'situacao',
-        #                     'vendedor_id',
-        #                     'vendedor_nomefantasia',
-        #                     'agenda_entrega',
-        #                     'total_itens',
-        #                     'taxa_entrega',
-        #                     'total_pedido',
-        #                     'observacao',
-        #                     'avaliacao_pontos',
-        #                     'avaliacao_comentarios',
-        #                     'item_id',
-        #                     'produto_id',    
-        #                     'produto_descricao',
-        #                     'resumo',
-        #                     'categoria',                            
-        #                     'tamanho',
-        #                     'quantidade',
-        #                     'medida',
-        #                     'valor_unitario',
-        #                     'total_item',
-        #                     'ids',
-        #                     'cliente_id',
-        #                     'cliente_nome',
-        #                     'cliente_email',
-        #                     'cliente_fone',
-        #                     'cliente_logradouro',
-        #                     'cliente_numero',
-        #                     'cliente_complemento',
-        #                     'cliente_bairro',
-        #                     'cliente_cidade',
-        #                     'cliente_estado',
-        #                     'cliente_cep'
-        #                     ]                    
-        
+
+    def getDashboard(self, token):
+        self.url = current_app.config.get('URL_BASE')+"/v1/dashboard"        
+        headers = {'Authorization': token}
+        response = requests.get(self.url, headers=headers)
+        j = json.loads(response.content)
+        self.dashboard = Dashboard(**j)
+        return self.dashboard
+
+
     # def obterAssociados(self):
     #     return self.associado.query.order_by(Associado.nomefantasia).all()
 

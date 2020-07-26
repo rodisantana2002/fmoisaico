@@ -17,103 +17,61 @@
 
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Gerar Report</a>
           </div>
 
           <div class="row">
-             <!-- Processos e pendentes -->
+
+
+            <!-- Logs Registrados -->
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Processos</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{processos}}</div>
-                    </div>
-
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Arquivos</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{files}}</div>
-                    </div>
-
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Processadas</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{refProcessadas}}</div>
-                    </div>
-
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Pendentes</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{refPendentes}}</div>
-                    </div>
-
-                    <div class="col-auto">
-                      <i class="fas fa-cog fa-3x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
- 
-            <!-- Referencias total  -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Referências</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{referencias}}</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-file-word fa-3x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Traduzidos e pendentes -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Traduzidas</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">000</div>
-                    </div>
-
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pendentes</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">000</div>
-                    </div>
-
-                    <div class="col-auto">
-                      <i class="fas fa-language fa-3x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- duplicados  -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Duplicadas</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="text-align:center">Logs Registrados</div>
                       <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">000</div>
+                        <div class="col mr-2" style="text-align:center">
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{dashboard.totalGeralLogs}}</div>
                         </div>
                       </div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-check-double fa-3x text-gray-300"></i>
+                      <i class="fa fa-bug fa-3x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            <!-- Logs Por Tipo -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2" style="text-align:center">
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Info</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{dashboard.totalPorTipo.Info}}</div>
+                    </div>
+
+                    <div class="col mr-2" style="text-align:center">
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Warning</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{dashboard.totalPorTipo.Warning}}</div>
+                    </div>
+
+                    <div class="col mr-2" style="text-align:center">
+                      <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Error</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{dashboard.totalPorTipo.Error}}</div>
+                    </div>
+
+                    <div class="col-auto">
+                      <i class="fas fa-cogs fa-3x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
           </div>
         </div>
