@@ -26,7 +26,8 @@ def home():
     if 'email' in session:    
         nome = session.get("nome")
         dashboard = oper.getDashboard(session.get("token"))
-        return render_template('index.html', nome=nome, dashboard=dashboard)
+        perfil = oper.getPerfil(session.get('token'), session.get('email'))
+        return render_template('index.html', nome=nome, dashboard=dashboard, perfil=perfil)
     else:
         return render_template('login.html', page=None)
 
@@ -83,6 +84,30 @@ def cadastro():
         return render_template('registro.html', page=None)
 
 
+@views.route('/perfil', methods=['GET'])
+def atualizarPerfil():
+    if 'email' in session:
+        perfil = oper.getPerfil(session.get('token'), session.get('email'))
+        return render_template('perfil.html', perfil = perfil, page=None)
+
+    else:
+        return render_template('login.html', page=None)
+
+
+@views.route('/perfil/atualizar', methods=['POST'])
+def atualizarUsuario():
+    if 'email' in session:
+        perfil = Perfil(request.values.get('id'), "", request.values.get('email'), request.values.get('nomecompleto'), request.values.get('sexo'), request.values.get('celular'), request.values.get('dtnascimento'), "", "", "","", "", "")
+        result = auth.atualizarUsuario(perfil, session.get('token'))
+
+        return result.get("code")
+    
+    else:
+        return render_template('login.html', page=None)
+    
+
+
+
 # @views.route('/registro/envio', methods=['POST'])
 # def registrar():
 #     if 'email' in session:
@@ -127,40 +152,6 @@ def cadastro():
 
 
 
-@views.route('/perfil', methods=['GET'])
-def atualizarPerfil():
-    if 'email' in session:
-        Usuario = auth.obterUsuario(session.get('email'))
-        return render_template('perfil.html', Usuario=Usuario, page=None)
-
-    else:
-        return render_template('login.html', page=None)
-
-# @views.route('/perfil/atualizar', methods=['POST'])
-# def atualizarUsuario():
-#     if 'email' in session:
-#         usuario = Usuario()
-#         usuario = auth.obterUsuario(session.get('id'))            
-        
-#         usuario.nomecompleto = request.values.get('nomecompleto')
-#         usuario.fonecelular = request.values.get('celular')
-#         usuario.sexo = request.values.get('sexo')
-#         usuario.dtnascimento = request.values.get('dtnascimento')
-#         usuario.cep = request.values.get('cep')
-#         usuario.logradouro = request.values.get('logradouro')
-#         usuario.numero = request.values.get('numero')
-#         usuario.complemento = request.values.get('complemento')
-#         usuario.bairro = request.values.get('bairro')
-#         usuario.cidade = request.values.get('cidade')
-#         usuario.estado = request.values.get('estado')
-
-#         result = auth.atualizarUsuario(usuario)
-
-#         return result.get("code")
-    
-#     else:
-#         return render_template('login.html', page=None)
-    
     
 # @views.route('/perfil/acesso', methods=['POST'])
 # def atualizarAcesso():

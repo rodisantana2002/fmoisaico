@@ -44,6 +44,40 @@ class Autenticacao():
 
         return self.authentic
 
+    def obterUsuario(self, email):
+        self.user = Usuario()
+        return self.user
+    
+    def atualizarUsuario(self, perfil, token):
+        self.url = current_app.config.get('URL_BASE')+"/v1/perfis/" + perfil.id
+        headers = {'Authorization': token, 'content-type':'application/json'}
+        strDados =  '{"id": ' + perfil.id + ', "dtregistro": "' + perfil.dtregistro + '", "email": "' + perfil.email +'", "nomecompleto": "' + perfil.nomecompleto + '", "sexo": "'+perfil.sexo+'", "fonecelular": "'+perfil.fonecelular+'",   "dtnascimento": "'+perfil.dtnascimento+'",        "logradouro": null,        "numero": null,        "complemento": null,        "cidade": null,        "estado": null,        "cep": null    }'        
+        
+        response = requests.put(self.url, data=strDados, headers=headers)        
+        try:
+             if response.status_code == 200:
+                 # registra o token 
+                 self.authentic["code"] = "200"
+                 self.authentic["msg"] = "OK"
+                 
+             elif response.status_code ==403:
+                 self.authentic["code"] = "403"
+                 self.authentic["msg"] = "Email ou senha estão incorretos!"
+
+             elif response.status_code ==415:
+                 self.authentic["code"] = "403"
+                 self.authentic["msg"] = "Erro ao atualizar Dados!"
+
+             elif response.status_code ==404:
+                self.authentic["code"] = "404"
+                self.authentic["msg"] = "API não localizada!"
+
+        except Exception as e:
+            self.authentic["code"] = "500"
+            self.authentic["msg"] = "Erro desconhecido - {}".format(e)
+
+        return self.authentic
+    
     # def registrarUsuario(self, usuario):
     #     # validar se usuario já existe
     #     user = self.usuario.query.filter_by(email=usuario.email).first()
@@ -65,22 +99,7 @@ class Autenticacao():
     #     self.authentic["msg"] = "Registro efetuado com sucesso!"
     #     return self.authentic
     
-    # def atualizarUsuario(self, usuario):
-    #     try:
-    #         self.usuario = usuario
-    #         self.usuario.update()
 
-    #         self.authentic["code"] = "200"
-    #         self.authentic["msg"] = "Registro atualizado com sucesso!"
-    #         return self.authentic
-
-    #     except:
-    #         self.authentic["code"] = "500"
-    #         self.authentic["msg"] = "Erro desconhecido"    
-
-    def obterUsuario(self, email):
-        self.user = Usuario()
-        return self.user
        
     # def enviar_senha(self, email):
     #     try:

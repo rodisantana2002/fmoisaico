@@ -18,8 +18,8 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <div class="col-12">
-                                <h3 style="text-align:center; color:#ac29ba">Nome</h3>                    
-                                <h6 style="text-align:center; color:#ac29ba">Email</h6>                    
+                                <h2 style="text-align:center; color:#ac29ba"><b>{{perfil.nomecompleto}}</b></h2>                    
+                                <h6 style="text-align:center; color:#ac29ba">{{perfil.email}}</h6>                    
                             </div>
                         </div>
 
@@ -65,17 +65,21 @@
                                                     {% endblock %}
 
                                                     <div class="col-12">
-                                                        <input type="text" maxlength="100" style="margin-bottom: 15px" class="form-control form-control-md" name="nomecompleto" id="nomecompleto" placeholder="Nome Completo *"  required>
+                                                        <input type="text" maxlength="100" style="margin-bottom: 15px; display:none" class="form-control form-control-md" name="id" id="id" value="{{perfil.id}}">
+                                                        <input type="text" maxlength="100" style="margin-bottom: 15px; display:none" class="form-control form-control-md" name="email" id="email"  value="{{perfil.email}}">
                                                     </div>
 
                                                     <div class="col-12">
-                                                        <input type="text" style="margin-bottom: 15px" class="form-control form-control-md" name="celular" id="celular" placeholder="Telefone Celular *" required>
-                                                        <script type="text/javascript">$("#celular").mask("(99) 99999-9999");</script>
+                                                        <input type="text" maxlength="100" style="margin-bottom: 15px" class="form-control form-control-md" name="nomecompleto" id="nomecompleto" placeholder="Nome Completo *" value="{{perfil.nomecompleto}}"  required>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <input type="text" style="margin-bottom: 15px" class="form-control form-control-md" name="celular" id="celular" placeholder="Telefone Celular *" value="{{perfil.fonecelular}}" required>
                                                     </div>
 
                                                     <div class="col-12">
                                                         <select name="sexo" id="sexo" class="form-control" style="margin-bottom: 15px; color=gray"  required>
-                                                            <option selected>{{Usuario.sexo}}</option>
+                                                            <option selected>{{perfil.sexo}}</option>
                                                             <option value="Masculino">Masculino</option>
                                                             <option value="Feminino">Feminino</option>
                                                             <option value="Outro">Outro</option>
@@ -84,9 +88,9 @@
                                                     
                                                     <div class="input-group mb-6"  style="margin-bottom: 15px; color:gray; margin-left:10px; margin-right:-50px" >
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text">Data Nascimento</span>
+                                                            <span class="input-group-text">Data Nascimento </span>
                                                         </div>
-                                                        <input type="date" class="form-control" name="dtnascimento" id="dtnascimento" style="margin-right:22px"  placeholder="Data Nascimento *" required>
+                                                        <input type="date" class="form-control" name="dtnascimento" id="dtnascimento" style="margin-right:22px"  placeholder="Data Nascimento *" value="{{perfil.dtnascimento}}" required>
                                                     </div>                        
 
                                                     <!-- comandos --> 

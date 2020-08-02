@@ -18,12 +18,10 @@
 })();
 
 
-$(document).ready(function () {
-  var url_base = "http://localhost:5000/";
+$(document).ready(function ($) {
+  var url_base = "http://localhost:8000/";
 //   var url_base = "https://resthouse.herokuapp.com/";
 //   var urlCEP = "https://viacep.com.br/ws/"
-
-
 
    if ($("#login-alerta").html() === "") {
        $("#login-alerta").hide();
@@ -63,18 +61,13 @@ $(document).ready(function () {
            $.ajax({
                type: "POST",
                url: url_base + "perfil/atualizar",
-               data:{nomecompleto: $("#nomecompleto").val(),
+               data:{id: $("#id").val(), 
+                     email:$("#email").val(),   
+                     nomecompleto: $("#nomecompleto").val(),
                      celular: $("#celular").val(),
                      dtnascimento: $("#dtnascimento").val(),
-                     sexo: $("#sexo").val(),
-                     cep: $("#cep").val(),
-                     logradouro: $("#logradouro").val(),
-                     numero: $("#numero").val(),
-                     complemento: $("#complemento").val(),
-                     bairro: $("#bairro").val(),
-                     cidade: $("#cidade").val(),
-                     estado: $("#estado").val()
-                   },
+                     sexo: $("#sexo").val()
+                    },
                async: false,
                success: function (data) { 
                    $(location).attr('href', url_base + 'perfil');

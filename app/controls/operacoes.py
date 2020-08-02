@@ -15,8 +15,6 @@ class Operacoes():
 
     def __init__(self):
         self.authentic = {"code": "", "msg": "", "email": "", "token":"", "nome":"", "id": "", "value":"", "superuser":""}
-        self.user = Usuario()
-
 
     def getDashboard(self, token):
         self.url = current_app.config.get('URL_BASE')+"/v1/dashboard"        
@@ -25,6 +23,18 @@ class Operacoes():
         j = json.loads(response.content)
         self.dashboard = Dashboard(**j)
         return self.dashboard
+
+
+    def getPerfil(self, token, email):
+        self.url = current_app.config.get('URL_BASE')+"/v1/perfis"        
+        headers = {'Authorization': token}
+        param = {'email': email}
+        
+        response = requests.get(self.url, headers=headers, params=param)
+        j = json.loads(response.content)
+        self.perfil = Perfil(**j[0])
+        return self.perfil
+        
 
 
     # def obterAssociados(self):

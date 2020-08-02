@@ -9,168 +9,26 @@ models = Blueprint("models", __name__)
 
 app = Flask(__name__)
 
-# Classe Usuario
-class Usuario:
+# Classe Perfil
+class Perfil:
     def __init__(self):
-        self._id=""        
-        self._email=""
-        self._nomecompleto=""
-        self._sexo=""
-        self._fonecelular=""
-        self._dtnascimento=""
-        self._token=""
+        pass
+    
+    def __init__(self, id, dtregistro, email, nomecompleto, sexo, fonecelular, dtnascimento, logradouro, numero, complemento, cidade, estado, cep):
+        self.id=id
+        self.dtregistro = dtregistro
+        self.email=email
+        self.nomecompleto=nomecompleto
+        self.sexo=sexo
+        self.fonecelular=fonecelular
+        self.dtnascimento=dtnascimento
         
-    @property
-    def id(self):
-        return self._id
-    
-    @id.setter
-    def id(self, id):
-        self._id = id
-
-    @property
-    def email(self):
-        return self._email
-    
-    @email.setter
-    def email(self, email):
-        self._email = email
-
-    @property
-    def nomecompleto(self):
-        return self._nomecompleto
-    
-    @nomecompleto.setter
-    def nomecompleto(self, nomecompleto):
-        self._nomecompleto = nomecompleto
-
-    @property
-    def sexo(self):
-        return self._sexo
-    
-    @sexo.setter
-    def sexo(self, sexo):
-        self._sexo = sexo
-
-    @property
-    def fonecelular(self):
-        return self._fonecelular
-    
-    @fonecelular.setter
-    def fonecelular(self, fonecelular):
-        self._fonecelular = fonecelular
-
-    @property
-    def dtnascimento(self):
-        return self._dtnascimento
-    
-    @dtnascimento.setter
-    def dtnascimento(self, dtnascimento):
-        self._dtnascimento = dtnascimento
-
-    @property
-    def token(self):
-        return self._token
-    
-    @token.setter
-    def token(self, token):
-        self._token = token
-        
-
-    def serialize(self):
-        return {
-            'id': self._id,
-            'email': self.email,
-            'nomeCompleto': self._nomecompleto,
-            'sexo': self._sexo,
-            'foneCelular': self._fonecelular,
-            'dtNascimento': self._dtnascimento,
-            'token': self._token
-        }
-
-    def __repr__(self):
-        return self.serialize()
-        
-        
-    
-    
-class Authentic:    
-    def __init__(self):
-        self._code=""        
-        self._id=""      
-        self._email=""
-        self._nome=""
-        self._msg=""
-        self._value=""
-        self._superuser=""
-        self._token=""
-    
-    
-    @property
-    def code(self):
-        return self._code
-    
-    @code.setter
-    def code(self, code):
-        self._code = code
-
-    @property
-    def id(self):
-        return self._id
-    
-    @id.setter
-    def id(self, id):
-        self._id = id
-
-    @property
-    def email(self):
-        return self._email
-    
-    @email.setter
-    def email(self, email):
-        self._email = email
-
-    @property
-    def nome(self):
-        return self._nome
-    
-    @nome.setter
-    def nome(self, nome):
-        self._nome = nome
-
-    @property
-    def msg(self):
-        return self._msg
-    
-    @msg.setter
-    def msg(self, msg):
-        self._msg = msg
-
-    @property
-    def value(self):
-        return self._value
-    
-    @value.setter
-    def value(self, value):
-        self._value = value
-
-    @property
-    def superuser(self):
-        return self._superuser
-    
-    @superuser.setter
-    def superuser(self, superuser):
-        self._superuser = superuser
-
-    @property
-    def token(self):
-        return self._token
-    
-    @token.setter
-    def token(self, token):
-        self._token = token    
-
-
+        self.logradouro = logradouro
+        self.numero = numero
+        self.complemento = complemento
+        self.cidade = cidade
+        self.estado = estado
+        self.cep = cep
 
 
 class Dashboard:
@@ -179,6 +37,94 @@ class Dashboard:
         self.totalPorSistema=totalPorSistema
         self.totalPorTipo=totalPorTipo
 
+
+
+
+
+
+
+# # Classe Associado
+# class Associado(db.Model):
+#     __tablename__ = "associado"
+
+#     # dados essenciais
+#     id = db.Column(db.Integer, primary_key=True)
+
+#     situacao = db.Column(db.String(30), default="Disponivel")
+#     email = db.Column(db.String(100))
+#     nomefantasia = db.Column(db.String(100))
+#     resumo = db.Column(db.String(400))
+#     tipopessoa = db.Column(db.String(30))
+#     categoria = db.Column(db.String(60))
+#     funcionamentodias = db.Column(db.String(50))
+#     funcionamentohorarioinicio = db.Column(db.String(20))
+#     funcionamentohorariotermino = db.Column(db.String(20))
+#     taxaentrega = db.Column(db.String(1), default="N")
+#     valortaxaentrega = db.Column(db.String(10), default="0,00")
+#     agenda_entrega = db.Column(db.String(1), default="N")     
+
+#     # endereço
+#     logradouro = db.Column(db.String(100))
+#     numero = db.Column(db.String(10))
+#     complemento = db.Column(db.String(50))
+#     bairro = db.Column(db.String(50))
+#     cidade = db.Column(db.String(60))
+#     estado = db.Column(db.String(30))
+#     cep = db.Column(db.String(12))
+
+#     # acesso
+#     dtregistro = db.Column(db.DateTime, default=datetime.datetime.today())
+#     logo = db.Column(db.String(100))
+
+#     categorias_associado = relationship('AssociadoCategoria', backref='associado')
+#     avaliacoes = relationship('PedidoAvaliacao', backref='associado')
+    
+    
+#     def avaliacao(self):
+#         count_nota1 = 0
+#         count_nota2 = 0
+#         count_nota3 = 0
+#         count_nota4 = 0
+#         count_nota5 = 0
+
+#         soma_nota1 = 0
+#         soma_nota2 = 0
+#         soma_nota3 = 0
+#         soma_nota4 = 0
+#         soma_nota5 = 0
+        
+#         if len(self.avaliacoes) == 0:
+#             return "Novo"
+#         else:
+#             # encontra o total de avaliacoes por nota
+#             for avaliacao in self.avaliacoes:
+#                 if avaliacao.nota ==1:
+#                     count_nota1 = count_nota1+1
+#                 if avaliacao.nota ==2:
+#                     count_nota2 = count_nota2+1
+#                 if avaliacao.nota ==3:
+#                     count_nota3 = count_nota3+1
+#                 if avaliacao.nota ==4:
+#                     count_nota4 = count_nota4+1
+#                 if avaliacao.nota ==5:
+#                     count_nota5 = count_nota5+1           
+                             
+#             # multiplica as notas pelos totais encontrados
+#             soma_nota1 = count_nota1 * 1
+#             soma_nota2 = count_nota2 * 2
+#             soma_nota3 = count_nota3 * 3
+#             soma_nota4 = count_nota4 * 4
+#             soma_nota5 = count_nota5 * 5
+            
+#             soma = (soma_nota1+soma_nota2+soma_nota3+soma_nota4+soma_nota5)
+#             avaliacao = (soma_nota1+soma_nota2+soma_nota3+soma_nota4+soma_nota5)/(count_nota1+count_nota2+count_nota3+count_nota4+count_nota5)
+                
+#             return round(avaliacao, 1)
+        
+
+#     def add(self, associado):
+#         db.session.add(associado)
+#         db.session.commit()
 
 
 
