@@ -35,6 +35,66 @@ class Operacoes():
         self.perfil = Perfil(**j[0])
         return self.perfil
         
+    def getSistemas(self, token):
+        self.url = current_app.config.get('URL_BASE')+"/v1/sistemas"
+        headers = {'Authorization': token}
+        sistemas = []
+
+        response = requests.get(self.url, headers=headers)
+        j = json.loads(response.content)
+        for item in j:
+            sistema = Sistema(**item)
+            sistemas.append(sistema)
+            
+        return sistemas
+
+    def getSistema(self, token, id):
+        self.url = current_app.config.get('URL_BASE')+"/v1/sistemas/"+id
+        headers = {'Authorization': token}
+
+        response = requests.get(self.url, headers=headers)
+        j = json.loads(response.content)
+        sistema = Sistema(**j)
+           
+        return sistema
+
+    def registrarSistema(self, token, sistema):
+        headers = {'Authorization': token, 'content-type':'application/json'}        
+        strDados =  '{"id": ' + sistema.id + ', "dtregistro": "' + sistema.dtregistro + '", "nome": "' + sistema.nome +'", "descricao": "' + sistema.descricao + '", "tipo": "'+ sistema.tipo +'", "linguagem": "'+ sistema.linguagem +'"}'        
+
+        if sistema.id == None:
+            self.url = current_app.config.get('URL_BASE')+"/v1/sistemas"
+            response = requests.put(self.url, data=strDados, headers=headers)        
+            response = requests.post(self.url, data=strDados, headers=headers)                
+        else:
+            self.url = current_app.config.get('URL_BASE')+"/v1/sistemas/" + sistema.id
+            strDados =  '{"id": ' + sistema.id + ', "dtregistro": "' + sistema.dtregistro + '", "nome": "' + sistema.nome +'", "descricao": "' + sistema.descricao + '", "tipo": "'+ sistema.tipo +'", "linguagem": "'+ sistema.linguagem +'"}'        
+            response = requests.put(self.url, data=strDados, headers=headers)                
+        
+        try:
+             if response.status_code == 200:
+                 # registra o token 
+                 self.authentic["code"] = "200"
+                 self.authentic["msg"] = "OK"
+                 
+             elif response.status_code ==403:
+                 self.authentic["code"] = "403"
+                 self.authentic["msg"] = "Autenticação inválida!"
+
+             elif response.status_code ==415:
+                 self.authentic["code"] = "403"
+                 self.authentic["msg"] = "Erro ao atualizar Dados!"
+
+             elif response.status_code ==404:
+                self.authentic["code"] = "404"
+                self.authentic["msg"] = "API não localizada!"
+
+        except Exception as e:
+            self.authentic["code"] = "500"
+            self.authentic["msg"] = "Erro desconhecido - {}".format(e)
+
+        return self.authentic
+
 
 
     # def obterAssociados(self):

@@ -99,13 +99,37 @@ def atualizarUsuario():
     if 'email' in session:
         perfil = Perfil(request.values.get('id'), "", request.values.get('email'), request.values.get('nomecompleto'), request.values.get('sexo'), request.values.get('celular'), request.values.get('dtnascimento'), "", "", "","", "", "")
         result = auth.atualizarUsuario(perfil, session.get('token'))
-
         return result.get("code")
     
     else:
         return render_template('login.html', page=None)
-    
 
+
+@views.route('/sistemas', methods=['GET'])
+@views.route('/sistemas/<id>', methods=['GET'])
+def carregarSistemas(id=None):
+    perfil = oper.getPerfil(session.get('token'), session.get('email'))
+    
+    if 'email' in session:
+        if id==None:
+            sistemas = oper.getSistemas(session.get('token'))
+            return render_template('sistemas/sistema.html', perfil=perfil, sistemas=sistemas, page=None)
+        else:    
+            sistema = oper.getSistema(session.get('token'), id)
+            return render_template("sistemas/sistemadetail.html", perfil=perfil, sistema=sistema, page=None)
+
+    else:
+        return render_template('login.html', page=None)
+
+@views.route('/sistemas/registrar', methods=['POST'])
+def registrarSistema():
+    if 'email' in session:
+        sistema = Sistema(request.values.get('id'),"", request.values.get('nome'), request.values.get('descricao'), request.values.get('tipo'), request.values.get('linguagem'))
+        result = oper.registrarSistema(session.get('token'), sistema)
+        return result.get("code")
+
+    else:
+        return render_template('login.html', page=None)
 
 
 # @views.route('/registro/envio', methods=['POST'])

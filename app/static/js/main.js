@@ -20,7 +20,7 @@
 
 $(document).ready(function ($) {
 //   var url_base = "http://localhost:8000/";
-  var url_base = "https://sigalogs.herokuapp.com/";
+var url_base = "https://sigalogs.herokuapp.com/";
 //   var urlCEP = "https://viacep.com.br/ws/"
 
    if ($("#login-alerta").html() === "") {
@@ -42,6 +42,10 @@ $(document).ready(function ($) {
    } else {
        $("#recupera-senha").show();
    };
+
+   $('#dataTableSistemas').DataTable({
+        "order": [[2, "asc"]]
+   });
 
 
    $("#btn-dados").click(function(){

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt">
+  {% include 'reuse/base.html' %}
+
+  <!-- corpo -->
+  <body id="page-top" style="background:#fcf8ef">
+
+    <div id="wrapper">
+        {% include 'reuse/sideBar.html' %}
+
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+             {% include 'reuse/headBar.html' %}
+
+                <div class="container-fluid">
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <div class="col-12">
+                                <h2 style="text-align:center; color:#ac29ba"><b>{{sistema.nome}}</b></h2>                    
+                                <h6 style="text-align:center; color:#ac29ba">{{sistema.descricao}}</h6>                    
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div id="paneMenu" class="container" >
+                                <div class="row">
+
+
+                                    <div id="body" name="body" class="container" >
+                                        <div class="row">
+                                        <div class="col-12">
+                                                <div class="panel-group" style="margin-top:8px">    
+                
+                                                    <div id="paneDados" class="panel panel-default"  style="margin-bottom:15px;  border-color:gray; display:true">                                                  
+                                                        <div class="panel-body" style="margin-top:3px; margin-bottom:-15px">
+                
+                                                            {% block content_registro %}
+                                                                <div class="alert alert-warning" id="registro-alerta" style="display:none; text-align:center">{{ page.msg }}</div>        
+                                                            {% endblock %}
+                
+                                                            <div class="col-12">
+                                                                <input type="text" maxlength="100" style="margin-bottom: 15px; display:none" class="form-control form-control-md" name="id" id="id" value="{{sistema.id}}">
+                                                            </div>
+                
+                                                            <div class="col-12">
+                                                                <input type="text" maxlength="100" style="margin-bottom: 15px" class="form-control form-control-md" name="nome" id="nome" placeholder="Nome *" value="{{sistema.nome}}"  required>
+                                                            </div>
+                
+                                                            <div class="col-12">
+                                                                <input type="text" style="margin-bottom: 15px" class="form-control form-control-md" name="descricao" id="descricao" placeholder="Descricao *" value="{{sistema.descricao}}" required>
+                                                            </div>
+                
+                                                            <div class="col-12">
+                                                                <input type="text" style="margin-bottom: 15px" class="form-control form-control-md" name="linguagem" id="linguagem" placeholder="Linguagem *" value="{{sistema.linguagem}}" required>
+                                                            </div>
+                
+                                                            <div class="col-12">
+                                                                <select name="tipo" id="tipo" class="form-control" style="margin-bottom: 15px; color=gray"  required>
+                                                                    <option selected>{{sistema.tipo}}</option>
+                                                                    <option value="FRONTEND">Masculino</option>
+                                                                    <option value="BACKEND">Backend</option>
+                                                                    <option value="API">API</option>
+                                                                    <option value="MOBILE">Mobile</option>
+                                                                    <option value="DESKTOP">Desktop</option>
+                                                                    <option value="IOT">IOT</option>
+                                                                </select>
+                                                            </div>      
+                                                            
+                
+                                                            <!-- comandos --> 
+                                                            <div class="form-group" style="text-align:center; padding-right:15px; margin-bottom:10px">                                       
+                                                                <div class="col-12">
+                                                                    <a href="{{ url_for('views.carregarSistemas')}}" name="btn-voltar" id="btn-voltar" type="link" class="btn btn-primary" style="border-color:gray;background-color:gray" ><i class="icon-hand-right"></i> Voltar </a>                            
+                                                                    <button id="btnSalvarSistema" type="button" class="btn btn-primary" ><i class="icon-hand-right"></i> Salvar </button>                            
+                                                                </div>
+                                                            </div>    
+                
+                                                        
+                                                        </div>        
+                                                    </div>  
+                                                </div> 
+                                            </div>   
+                                        </div>   
+                                    </div> 
+                
+
+                                </div> 
+                            </div> 
+                        </div>  
+                    </div>                                        
+                </div>
+            </div>    
+  
+            {% include 'reuse/footer.html' %}
+        </div>
+    </div>
+
+  </body>

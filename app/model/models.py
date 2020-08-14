@@ -10,10 +10,7 @@ models = Blueprint("models", __name__)
 app = Flask(__name__)
 
 # Classe Perfil
-class Perfil:
-    def __init__(self):
-        pass
-    
+class Perfil:   
     def __init__(self, id, dtregistro, email, nomecompleto, sexo, fonecelular, dtnascimento, logradouro, numero, complemento, cidade, estado, cep):
         self.id=id
         self.dtregistro = dtregistro
@@ -37,8 +34,14 @@ class Dashboard:
         self.totalPorSistema=totalPorSistema
         self.totalPorTipo=totalPorTipo
 
-
-
+class Sistema:
+    def __init__(self, id, dtregistro, nome, descricao, tipo, linguagem):
+        self.id = id
+        self.dtregistro = dtregistro
+        self.nome = nome 
+        self.descricao = descricao
+        self.tipo = tipo
+        self.linguagem = linguagem
 
 
 
