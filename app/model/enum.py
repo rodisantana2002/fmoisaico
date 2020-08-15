@@ -1,12 +1,5 @@
 from enum import Enum
 
-
-class genero(Enum):
-    Masculino = "M"
-    Feminino = "F"
-    Outro = "O"
-
-
 class tipo(Enum):
     Erro = "ERROR"
     Aviso = "INFO"

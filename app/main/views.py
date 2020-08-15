@@ -120,13 +120,27 @@ def carregarSistemas(id=None):
 
     else:
         return render_template('login.html', page=None)
+    
+    
+@views.route('/sistemas/novo', methods=['GET'])
+def adicionarSistema():
+    perfil = oper.getPerfil(session.get('token'), session.get('email'))
+    
+    if 'email' in session:
+        sistema = Sistema('', '', '', '', '', '')
+        return render_template("sistemas/sistemadetail.html", perfil=perfil, sistema=sistema, page=None)
+
+    else:
+        return render_template('login.html', page=None)
+    
+    
 
 @views.route('/sistemas/registrar', methods=['POST'])
 def registrarSistema():
     if 'email' in session:
-        sistema = Sistema(request.values.get('id'),"", request.values.get('nome'), request.values.get('descricao'), request.values.get('tipo'), request.values.get('linguagem'))
+        sistema = Sistema(request.values.get('id'), request.values.get('dtregistro'), request.values.get('nome'), request.values.get('descricao'), request.values.get('tipo'), request.values.get('linguagem'))
         result = oper.registrarSistema(session.get('token'), sistema)
-        return result.get("code")
+        return result.get("msg")
 
     else:
         return render_template('login.html', page=None)

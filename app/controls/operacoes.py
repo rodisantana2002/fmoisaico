@@ -59,35 +59,37 @@ class Operacoes():
         return sistema
 
     def registrarSistema(self, token, sistema):
-        headers = {'Authorization': token, 'content-type':'application/json'}        
-        strDados =  '{"id": ' + sistema.id + ', "dtregistro": "' + sistema.dtregistro + '", "nome": "' + sistema.nome +'", "descricao": "' + sistema.descricao + '", "tipo": "'+ sistema.tipo +'", "linguagem": "'+ sistema.linguagem +'"}'        
+        headers = {'Authorization': token, 'content-type':'application/json'}      
 
-        if sistema.id == None:
+
+        if sistema.id == '':
+            strDados =  '{"nome": "' + sistema.nome +'", "descricao": "' + sistema.descricao + '", "tipo": "'+ sistema.tipo +'", "linguagem": "'+ sistema.linguagem +'"}'                    
             self.url = current_app.config.get('URL_BASE')+"/v1/sistemas"
-            response = requests.put(self.url, data=strDados, headers=headers)        
             response = requests.post(self.url, data=strDados, headers=headers)                
         else:
+
+            strDados =  '{"id": ' + sistema.id + ', "dtregistro": "' + sistema.dtregistro + '", "nome": "' + sistema.nome +'", "descricao": "' + sistema.descricao + '", "tipo": "'+ sistema.tipo +'", "linguagem": "'+ sistema.linguagem +'"}'                    
             self.url = current_app.config.get('URL_BASE')+"/v1/sistemas/" + sistema.id
-            strDados =  '{"id": ' + sistema.id + ', "dtregistro": "' + sistema.dtregistro + '", "nome": "' + sistema.nome +'", "descricao": "' + sistema.descricao + '", "tipo": "'+ sistema.tipo +'", "linguagem": "'+ sistema.linguagem +'"}'        
             response = requests.put(self.url, data=strDados, headers=headers)                
         
         try:
              if response.status_code == 200:
                  # registra o token 
                  self.authentic["code"] = "200"
-                 self.authentic["msg"] = "OK"
                  
+             elif response.status_code ==400:
+                 self.authentic["code"] = "400"
+
              elif response.status_code ==403:
                  self.authentic["code"] = "403"
-                 self.authentic["msg"] = "Autenticação inválida!"
 
              elif response.status_code ==415:
                  self.authentic["code"] = "403"
-                 self.authentic["msg"] = "Erro ao atualizar Dados!"
 
              elif response.status_code ==404:
                 self.authentic["code"] = "404"
-                self.authentic["msg"] = "API não localizada!"
+
+             self.authentic["msg"] = response.content                
 
         except Exception as e:
             self.authentic["code"] = "500"

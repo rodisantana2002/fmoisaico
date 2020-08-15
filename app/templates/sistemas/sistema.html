@@ -17,9 +17,7 @@
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Manutenção Sistemas</h1>
-                        <a href=""
-                            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-plus fa-md text-white-300"></i><br>Adicionar</a>
+                        <a href="{{ url_for('views.adicionarSistema')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-md text-white-300"></i><br>Adicionar</a>
                     </div>
 
                     <!-- Tabela Processos -->
@@ -35,7 +33,6 @@
                                             <th style="text-align:center">Id</th>
                                             <th>Nome</th>
                                             <th>Descrição</th>
-                                            <th>Tipo</th>
                                             <th>Linguagem</th>
                                             <th style="text-align:center">-</th>
                                         </tr>
@@ -46,7 +43,6 @@
                                             <td style="text-align:center">{{sistema.id}}</td>
                                             <td>{{sistema.nome}}</td>
                                             <td>{{sistema.descricao}}</td>
-                                            <td>{{sistema.tipo}}</td>
                                             <td>{{sistema.linguagem}}</td>
                                             <td style="text-align:left">
                                                 <a id="btn-processo-detail" type="link" class="btn btn-link" href="{{ url_for('views.carregarSistemas', id=sistema.id)}}">

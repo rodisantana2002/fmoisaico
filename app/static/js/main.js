@@ -19,7 +19,7 @@
 
 
 $(document).ready(function ($) {
-//   var url_base = "http://localhost:8000/";
+// var url_base = "http://localhost:8000/";
 var url_base = "https://sigalogs.herokuapp.com/";
 //   var urlCEP = "https://viacep.com.br/ws/"
 
@@ -76,6 +76,40 @@ var url_base = "https://sigalogs.herokuapp.com/";
                success: function (data) { 
                    $(location).attr('href', url_base + 'perfil');
                }
+           });     
+       }        
+   });
+
+   $("#btnSalvarSistema").click(function(){
+       if (validarSistema()){
+           $.ajax({
+               type: "POST",
+               url: url_base + "/sistemas/registrar",
+               data:{id: $("#id").val(), 
+                     dtregistro:$("#dtregistro").val(),   
+                     nome:$("#nome").val(),   
+                     descricao: $("#descricao").val(),
+                     tipo: $("#tipo").val(),
+                     linguagem: $("#linguagem").val()
+                    },
+               async: false,
+               success: function (data) { 
+                   var result = jQuery.parseJSON(data);                   
+
+                   if(data.status=="200"){
+                        $(location).attr('href', url_base + 'sistemas');
+                   }
+                   else{
+                       str = ''
+                       for(msg in result.message){
+                             str = str + msg;
+                       }
+                        $("#registro-alerta").html(str);
+                        $("#registro-alerta").show();                 
+                   }
+
+               }
+
            });     
        }        
    });
@@ -138,13 +172,6 @@ var url_base = "https://sigalogs.herokuapp.com/";
            });            
        }
    });
-
-   // $("#btn-enviar-email").click(function () {
-   //     if (validaremail()) {
-   //         $("#recuperaform").submit();
-   //     }
-   // });
-
 
   
    // functions
@@ -238,6 +265,41 @@ var url_base = "https://sigalogs.herokuapp.com/";
       return true;
 
    }
+
+   function validarSistema(){
+        var msg = "O campo deve ser informado!"
+
+        if ($("#nome").val().trim().length === 0) {
+            $("#registro-alerta").html(msg);
+            $("#registro-alerta").show();
+            $("#nome").focus();
+            return false;
+        }
+
+        if ($("#descricao").val().trim().length == 0) {
+            $("#registro-alerta").html(msg);
+            $("#registro-alerta").show();
+            $("#descricao").focus();
+            return false;
+        }
+
+        if ($("#tipo").val() === "Tipo *") {
+            $("#registro-alerta").html(msg);
+            $("#registro-alerta").show();
+            $("#tipo").focus();
+            return false;
+        }
+
+        if ($("#linguagem").val().trim().length == 0) {
+            $("#registro-alerta").html(msg);
+            $("#registro-alerta").show();
+            $("#linguagem").focus();
+            return false;
+        }
+
+        return true;
+   }
+
 
    function validarDados() {
        var msg = "O campo deve ser informado!"
