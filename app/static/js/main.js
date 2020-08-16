@@ -20,7 +20,7 @@
 
 $(document).ready(function ($) {
 // var url_base = "http://localhost:8000/";
-var url_base = "https://sigalogs.herokuapp.com/";
+    var url_base = "https://sigalogs.herokuapp.com/";
 //   var urlCEP = "https://viacep.com.br/ws/"
 
    if ($("#login-alerta").html() === "") {
@@ -94,6 +94,7 @@ var url_base = "https://sigalogs.herokuapp.com/";
                     },
                async: false,
                success: function (data) { 
+                   alert(data.code);
                    if(data['code']==='200'){
                         $(location).attr('href', url_base + 'sistemas');
                    }

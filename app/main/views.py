@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, Blueprint, render_template, session, request, redirect, url_for, send_from_directory, Response
+from flask import Flask, Blueprint, render_template, session, request, redirect, url_for, send_from_directory, Response, jsonify
 from app.controls.auth import *
 from app.controls.operacoes import *
 from app.controls.utils import *
@@ -140,105 +140,27 @@ def registrarSistema():
     if 'email' in session:
         sistema = Sistema(request.values.get('id'), request.values.get('dtregistro'), request.values.get('nome'), request.values.get('descricao'), request.values.get('tipo'), request.values.get('linguagem'))
         result = oper.registrarSistema(session.get('token'), sistema)
-        return result
+        return jsonify(result)
 
     else:
         return render_template('login.html', page=None)
 
 
-# @views.route('/registro/envio', methods=['POST'])
-# def registrar():
-#     if 'email' in session:
-#         return redirect(url_for('views.home'))
-#     else:
-#         usuario = Usuario()
-
-#         usuario.nomecompleto = request.values.get('nomecompleto')
-#         usuario.email = request.values.get('email')
-#         usuario.fonecelular = request.values.get('celular')
-#         usuario.sexo = request.values.get('sexo')
-#         usuario.dtnascimento = request.values.get('dtnascimento')
-#         usuario.cep = request.values.get('cep')
-#         usuario.logradouro = request.values.get('logradouro')
-#         usuario.numero = request.values.get('numero')
-#         usuario.complemento = request.values.get('complemento')
-#         usuario.bairro = request.values.get('bairro')
-#         usuario.cidade = request.values.get('cidade')
-#         usuario.estado = request.values.get('estado')
-#         usuario.set_password(request.values.get('senha'))
-
-#         result = auth.registrarUsuario(usuario)
-
-#         return result.get("code")
-
-
-
-# @views.route('/recuperasenha/envio', methods=['POST'])
-# def enviar_senha():
-#     result = auth.validar_email(request.form['email-recuperar'])
-
-#     if 'email' in session:
-#         return redirect(url_for('views.home'))
-#     else:
-#         if result.get("code") != "200":
-#             # atualizar senha e enviar email
-#             result = auth.enviar_senha(request.form['email-recuperar'])
-#             return redirect(url_for('views.recuperar_senha'))
-#         else:
-#             return render_template('recuperasenha.html', page=result)
-
-
-
-
+@views.route('/logs', methods=['GET'])
+@views.route('/logs/<id>', methods=['GET'])
+def carregarLogs(id=None, descricao=None):
+    perfil = oper.getPerfil(session.get('token'), session.get('email'))
     
-# @views.route('/perfil/acesso', methods=['POST'])
-# def atualizarAcesso():
-#     if 'email' in session:
-#         usuario = Usuario()
-#         usuario = auth.obterUsuario(session.get('id'))
-                    
-#         senha_atual = request.values.get('senhaAtual')
-        
-#         if usuario.check_password(senha_atual):            
-#             usuario.set_password(request.values.get('senha'))        
-#             result = auth.atualizarUsuario(usuario)
+    if 'email' in session:
+        if id==None:
+            logs = oper.getLogs(session.get('token'))
+            return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+        else:    
+            sistema = oper.getSistema(session.get('token'), id)
+            return render_template("logs/logregistrodetail.html", perfil=perfil, log=log, page=None)
 
-#             return result.get("code")
-#         else:
-#             return "403"        
-    
-#     else:
-#         return render_template('login.html', page=None)
-
-
-# @views.route('/dashboard', methods=['GET'])
-# @views.route('/dashboard/<status>', methods=['GET'])
-# def carregarDashboard(status=None):
-#     if 'email' in session:
-#         usuario = auth.obterUsuario(session.get('id'))
-#         if usuario.superuser=='True':
-#             associados = oper.obterAssociados()
-#             clientes = auth.obterClientes()
-                    
-#             if status==None:
-#                 pedidos = oper.obterTodosPedidos()
-#             else:
-#                 pedidos = oper.obterPedidosDashboardByStatus(status)    
-            
-#             return render_template('dashboard.html', usuario=usuario, associados=associados, clientes=clientes, pedidos=pedidos)
-#         else:
-#             return render_template('login.html', page=None)
-#     else:
-#         return render_template('login.html', page=None)
-    
-# @views.route('/dashboard/download', methods=['GET'])    
-# def gerarDownload():
-#     if 'email' in session:
-#         return Response(oper.obterArquivoCSV(), mimetype="text/csv", headers={"Content-disposition":"attachment; filename=dados.csv"})        
-#     else:
-#         return render_template('login.html', page=None)            
-
-
+    else:
+        return render_template('login.html', page=None)
 
 
 
