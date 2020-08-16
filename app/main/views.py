@@ -170,8 +170,3 @@ def carregarLogs(id=None, descricao=None):
         return render_template('login.html', page=None)
 
 
-
-
-# {'timestamp': '2020-08-16T16:31:12.237+0000', 'status': 400, 'error': 'Bad Request', 'message': '[Os dados informados já estão cadastrados. (Nome já foi vinculado a outro Sistema)., A operação não pode ser realizada, Status 400]', 'path': '/v1/sistemas'}
-# {'msg': ['Sistema registrado com sucesso', '{"nome":"teste555","descricao":"sdasd","tipo":"FRONTEND","linguagem":"sadasd","id":83,"dtregistro":"16/08/2020 16:32:42"}', 'Status 200', 'v1/sistemas/83']}
-# {'message': ['Sistema registrado com sucesso', '{"nome":"teste55555","descricao":"sdasd","tipo":"FRONTEND","linguagem":"sadasd","id":85,"dtregistro":"16/08/2020 16:49:08"}', 'Status 200', 'v1/sistemas/85'], 'status': '200'}

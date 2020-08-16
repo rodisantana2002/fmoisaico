@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+{% include 'reuse/base.html' %}
+
+<body id="page-top">
+
+    <div id="wrapper">
+    {% include 'reuse/sideBar.html' %}
+
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+                {% include 'reuse/searchBar.html' %}
+
+                <div class="container-fluid">
+
+                    {% if logs|length ==0 %}
+                        <hr>                                                             
+                        <h3 style="text-align:center">Nenhum registro de log foi localizado</h3>      
+                    {% else %}     
+                        <div class="row" >                        
+                            {% for log in logs %}
+                                <!-- Area Card log -->
+                                <div class="col-lg-12 col-lg-12">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                            <h6 class="m-0 font-weight-bold text-primary">{{log.ano}} [Log{{log.id}}]</h6>
+                                            <div class="dropdown no-arrow">
+                                                <button class="btn-log-reprovar btn btn-link" type="link" value='{"id":"{{log.id}}"}'>[Detalhes]</button>
+
+                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                                <div class="dropdown-header">Opções Log:</div>
+                                                <a class="dropdown-item" href="#">Download PDF</a>
+                                                <a class="dropdown-item" href="#">Exportar CVS</a>
+                                                <div class="dropdown-divider"></div>
+                                                <button class="btn-log-remover dropdown-item" type="link" value='{"id":"{{log.id}}"}'>
+                                                    <i class="far fa-trash-alt" style="color:red"></i> Excluir
+                                                </button>                           
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Card Body -->
+                                        <div class="card-body">
+                                            <div class="log-area">
+                                                {%if log.tipo == "ERROR"%}
+                                                    <h4 align="justify" style="color:#800000"><b><i class="fa fa-times-circle" style="color:#800000"></i> {{log.tipo}}</b></h4>                                                
+                                                {% elif log.tipo == "INFO"%}
+                                                    <h4 align="justify" style="color:#00BFFF"><b><i class="fa fa-info-circle" style="color:#00BFFF"></i> {{log.tipo}}</b></h4>                                                                                                
+                                                {% elif log.tipo == "WARNING"%}
+                                                    <h4 align="justify" style="color:#FFA500"><b><i class="fa fa-exclamation-circle" style="color:#FFA500"></i> {{log.tipo}}</b></h4>                                                                                                
+                                                {% endif %}
+
+                                                <p align="justify" style="color:#9e6ea7">Data Registro: <br><b> {{log.dtregistro}}</b><p/>
+                                                <p align="justify">Qtde: {{log.qtde}}<p/>                                                
+                                                <p align="justify">Sistema: <br> <b>{{log.sistema.nome|lower}}/{{log.sistema.tipo|lower}}/{{log.sistema.linguagem|lower}} </b> <p/>
+                                            </div>
+                                        </div>
+                                    </div>                                                            
+                                </div>
+                            {% endfor %}                         
+                        </div>
+                    {% endif %}                               
+
+                </div>
+
+            </div>
+            {% include 'reuse/footer.html' %}
+        </div>
+
+    </div>
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>    
+</body>
+</html>    
