@@ -84,7 +84,7 @@ var url_base = "https://sigalogs.herokuapp.com/";
        if (validarSistema()){
            $.ajax({
                type: "POST",
-               url: url_base + "/sistemas/registrar",
+               url: url_base + "sistemas/registrar",
                data:{id: $("#id").val(), 
                      dtregistro:$("#dtregistro").val(),   
                      nome:$("#nome").val(),   
