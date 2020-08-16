@@ -94,22 +94,21 @@ var url_base = "https://sigalogs.herokuapp.com/";
                     },
                async: false,
                success: function (data) { 
-                   var result = jQuery.parseJSON(data);                   
-
-                   if(data.status=="200"){
+                   if(data['code']==='200'){
                         $(location).attr('href', url_base + 'sistemas');
                    }
-                   else{
-                       str = ''
-                       for(msg in result.message){
-                             str = str + msg;
-                       }
+                   else{      
+                        var result = JSON.parse(data.msg);
+                        var msgs =  result.message.split(",");                       
+                        str = "<ul>";
+                        for(i=0;i<msgs.length-1; i++){
+                            str += "<p>" + msgs[i].replace("[", "").replace("]", "") + "</p>";                            
+                        }
+                        str += "</ul>";
                         $("#registro-alerta").html(str);
                         $("#registro-alerta").show();                 
                    }
-
                }
-
            });     
        }        
    });
@@ -173,7 +172,7 @@ var url_base = "https://sigalogs.herokuapp.com/";
        }
    });
 
-  
+
    // functions
    function validaremail() {
        var msg = "O campo deve ser informado!"

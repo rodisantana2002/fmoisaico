@@ -38,9 +38,10 @@ class Operacoes():
     def getSistemas(self, token):
         self.url = current_app.config.get('URL_BASE')+"/v1/sistemas"
         headers = {'Authorization': token}
+        param={'pageSize':100}
         sistemas = []
 
-        response = requests.get(self.url, headers=headers)
+        response = requests.get(self.url, headers=headers, params=param)
         j = json.loads(response.content)
         for item in j:
             sistema = Sistema(**item)
@@ -74,7 +75,6 @@ class Operacoes():
         
         try:
              if response.status_code == 200:
-                 # registra o token 
                  self.authentic["code"] = "200"
                  
              elif response.status_code ==400:
@@ -89,6 +89,7 @@ class Operacoes():
              elif response.status_code ==404:
                 self.authentic["code"] = "404"
 
+             # carrega a mensagem conforme erro detectado
              self.authentic["msg"] = response.content                
 
         except Exception as e:

@@ -22,19 +22,26 @@
 
           <div class="row">
 
-
             <!-- Logs Registrados -->
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="text-align:center">Logs Registrados</div>
+
                       <div class="row no-gutters align-items-center">
+
                         <div class="col mr-2" style="text-align:center">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="text-align:center">Sistemas </div>                                              
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{dashboard.totalSistemas}}</div>
+                        </div>
+   
+                        <div class="col mr-2" style="text-align:center">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"  style="text-align:center"> Logs </div>                                              
                           <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{dashboard.totalGeralLogs}}</div>
                         </div>
                       </div>
+
                     </div>
                     <div class="col-auto">
                       <i class="fa fa-bug fa-3x text-gray-300"></i>
@@ -48,6 +55,7 @@
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
+
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2" style="text-align:center">
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Info</div>

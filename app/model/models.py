@@ -29,7 +29,8 @@ class Perfil:
 
 
 class Dashboard:
-    def __init__(self, totalGeralLogs, totalPorSistema, totalPorTipo):
+    def __init__(self, totalSistemas, totalGeralLogs, totalPorSistema, totalPorTipo):
+        self.totalSistemas=totalSistemas
         self.totalGeralLogs=totalGeralLogs        
         self.totalPorSistema=totalPorSistema
         self.totalPorTipo=totalPorTipo
