@@ -94,21 +94,23 @@ $(document).ready(function ($) {
                     },
                async: false,
                success: function (data) { 
-                   alert(data.code);
-                   if(data['code']==='200'){
-                        $(location).attr('href', url_base + 'sistemas');
-                   }
-                   else{      
-                        var result = JSON.parse(data.msg);
-                        var msgs =  result.message.split(",");                       
-                        str = "<ul>";
-                        for(i=0;i<msgs.length-1; i++){
-                            str += "<p>" + msgs[i].replace("[", "").replace("]", "") + "</p>";                            
-                        }
-                        str += "</ul>";
-                        $("#registro-alerta").html(str);
-                        $("#registro-alerta").show();                 
-                   }
+                   var itens =  data.split(",");                       
+                   alert(itens[1]);
+                //    var t = JSON.parse(data);                   
+                //    if(data['code']==='200'){
+                //         $(location).attr('href', url_base + 'sistemas');
+                //    }
+                //    else{      
+                //         var result = JSON.parse(data.msg);
+                //         var msgs =  result.message.split(",");                       
+                //         str = "<ul>";
+                //         for(i=0;i<msgs.length-1; i++){
+                //             str += "<p>" + msgs[i].replace("[", "").replace("]", "") + "</p>";                            
+                //         }
+                //         str += "</ul>";
+                //         $("#registro-alerta").html(str);
+                //         $("#registro-alerta").show();                 
+                //    }
                }
            });     
        }        

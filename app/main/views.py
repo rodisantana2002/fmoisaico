@@ -1,6 +1,7 @@
 import os
+import json
 
-from flask import Flask, Blueprint, render_template, session, request, redirect, url_for, send_from_directory, Response, jsonify
+from flask import Flask, Blueprint, render_template, session, request, redirect, url_for, send_from_directory, Response
 from app.controls.auth import *
 from app.controls.operacoes import *
 from app.controls.utils import *
@@ -140,7 +141,13 @@ def registrarSistema():
     if 'email' in session:
         sistema = Sistema(request.values.get('id'), request.values.get('dtregistro'), request.values.get('nome'), request.values.get('descricao'), request.values.get('tipo'), request.values.get('linguagem'))
         result = oper.registrarSistema(session.get('token'), sistema)
-        return result.__str__()
+        str = json.loads(result.get('msg'))
+        
+        var=[]
+        var.append(str.get('status'))
+        var.append(str.get('message'))
+
+        return var.__str__()
 
     else:
         return render_template('login.html', page=None)
@@ -165,3 +172,6 @@ def carregarLogs(id=None, descricao=None):
 
 
 
+# {'timestamp': '2020-08-16T16:31:12.237+0000', 'status': 400, 'error': 'Bad Request', 'message': '[Os dados informados já estão cadastrados. (Nome já foi vinculado a outro Sistema)., A operação não pode ser realizada, Status 400]', 'path': '/v1/sistemas'}
+# {'msg': ['Sistema registrado com sucesso', '{"nome":"teste555","descricao":"sdasd","tipo":"FRONTEND","linguagem":"sadasd","id":83,"dtregistro":"16/08/2020 16:32:42"}', 'Status 200', 'v1/sistemas/83']}
+# {'message': ['Sistema registrado com sucesso', '{"nome":"teste55555","descricao":"sdasd","tipo":"FRONTEND","linguagem":"sadasd","id":85,"dtregistro":"16/08/2020 16:49:08"}', 'Status 200', 'v1/sistemas/85'], 'status': '200'}
