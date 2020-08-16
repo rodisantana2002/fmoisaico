@@ -140,7 +140,7 @@ def registrarSistema():
     if 'email' in session:
         sistema = Sistema(request.values.get('id'), request.values.get('dtregistro'), request.values.get('nome'), request.values.get('descricao'), request.values.get('tipo'), request.values.get('linguagem'))
         result = oper.registrarSistema(session.get('token'), sistema)
-        return result
+        return result.__str__()
 
     else:
         return render_template('login.html', page=None)
