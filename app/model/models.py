@@ -45,20 +45,11 @@ class Sistema:
         self.linguagem = linguagem
 
 class Logregistro:
-    def __init__(self, id, dtregistro, tipo, descricao, qtde, sistema):
-        self.id = id
-        self.dtregistro = dtregistro
-        self.tipo = tipo
-        self.descricao = descricao
-        self.qtde = qtde
-        self.log = None
-        self.sistema = sistema
-
-    def detail(self, id, dtregistro, tipo, descricao, qtde, log, sistema):
+    def __init__(self, id, dtregistro, tipo, descricao, qtde, sistema, log=None):
         self.id = id
         self.dtregistro = dtregistro
         self.tipo = tipo
         self.descricao = descricao
         self.qtde = qtde
         self.log = log
-        self.sistema = sistema    
+        self.sistema = sistema

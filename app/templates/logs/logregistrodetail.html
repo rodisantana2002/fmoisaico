@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+{% include 'reuse/base.html' %}
+
+<body id="page-top">
+
+    <div id="wrapper">
+    {% include 'reuse/sideBar.html' %}
+
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+                {% include 'reuse/searchBar.html' %}
+
+                <div class="container-fluid">
+
+                    <!-- Area Card log -->
+                    <div class="col-lg-12 col-lg-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">[Log{{log.id}} - {{log.dtregistro}}]</h6>
+                                <div class="dropdown no-arrow">
+                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                    <div class="dropdown-header">Opções Log:</div>
+                                    <button class="btn-log-remover dropdown-item" type="link" value='{"id":"{{log.id}}"}'>
+                                        <i class="far fa-trash-alt" style="color:red"></i> Excluir
+                                    </button>                           
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="log-area">
+                                    {%if log.tipo == "ERROR"%}
+                                        <h4 align="justify" style="color:#8B0000"><b><i class="fa fa-times-circle" style="color:#8B0000"></i> {{log.tipo}}</b></h4>                                                
+                                    {% elif log.tipo == "INFO"%}
+                                        <h4 align="justify" style="color:#00BFFF"><b><i class="fa fa-info-circle" style="color:#00BFFF"></i> {{log.tipo}}</b></h4>                                                                                                
+                                    {% elif log.tipo == "WARNING"%}
+                                        <h4 align="justify" style="color:#FFA500"><b><i class="fa fa-exclamation-circle" style="color:#FFA500"></i> {{log.tipo}}</b></h4>                                                                                                
+                                    {% endif %}
+
+                                    <p align="justify" style="color:#9e6ea7">Descrição: <br><b> {{log.descricao}}</b><p/>
+                                    <p align="justify">Qtde: {{log.qtde}}<p/>                                                
+                                    <p align="justify">Sistema: <br> {{log.sistema.nome|lower}} | {{log.sistema.tipo|lower}} | {{log.sistema.linguagem|lower}} <p/>
+                                    <hr>
+                                    <p align="justify" style="color:#1E90FF	">Conteúdo: <br> {{log.log|lower}} <p/>
+                                </div>
+                            </div>
+                        </div>                                                            
+                    </div>
+
+                    <div class="col-12" style="text-align:center; margin-bottom:25px">
+                        <a href="{{ url_for('views.carregarLogs')}}" name="btn-voltar" id="btn-voltar" type="link" class="btn btn-primary" style="border-color:gray;background-color:gray"><i class="fas fa-arrow-left"></i> Voltar </a>                            
+                    </div>
+
+                </div>
+
+            </div>
+            {% include 'reuse/footer.html' %}
+        </div>
+
+    </div>
+
+</body>
+</html>    

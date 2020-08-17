@@ -115,10 +115,16 @@ class Operacoes():
 
     def getLog(self, token, id):
         self.url = current_app.config.get('URL_BASE')+"/v1/logs/"+id
+        self.url_log = current_app.config.get('URL_BASE')+"/v1/logs/"+id+"/log"
         headers = {'Authorization': token}
 
         response = requests.get(self.url, headers=headers)
         j = json.loads(response.content)
-        logregistro = Logregistro.detail(**j)
+        logregistro = Logregistro(**j)
+        
+        # response = requests.get(self.url, headers=headers)
+        # log = response.content;
+        # logregistro.log = log
            
         return logregistro         
+    
