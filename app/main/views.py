@@ -165,8 +165,8 @@ def carregarLogs(id=None, descricao=None):
             logs = oper.getLogs(session.get('token'), session.get('pageLog'))
             return render_template('logs/logregistro.html', perfil=perfil, logs=logs)
         else:    
-            # A FAZER
-            pass
+            log = oper.getLog(session.get('token'), id)
+            return render_template('logs/logregistrodetail.html', perfil=perfil, log=log)
 
     else:
         return render_template('login.html', page=None)

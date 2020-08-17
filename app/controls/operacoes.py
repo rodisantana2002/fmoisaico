@@ -112,3 +112,13 @@ class Operacoes():
             logs.append(log)
             
         return logs
+
+    def getLog(self, token, id):
+        self.url = current_app.config.get('URL_BASE')+"/v1/logs/"+id
+        headers = {'Authorization': token}
+
+        response = requests.get(self.url, headers=headers)
+        j = json.loads(response.content)
+        logregistro = Logregistro.detail(**j)
+           
+        return logregistro         

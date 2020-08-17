@@ -53,3 +53,12 @@ class Logregistro:
         self.qtde = qtde
         self.log = None
         self.sistema = sistema
+
+    def detail(self, id, dtregistro, tipo, descricao, qtde, log, sistema):
+        self.id = id
+        self.dtregistro = dtregistro
+        self.tipo = tipo
+        self.descricao = descricao
+        self.qtde = qtde
+        self.log = log
+        self.sistema = sistema    
