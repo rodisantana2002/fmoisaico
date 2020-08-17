@@ -99,10 +99,10 @@ class Operacoes():
         return self.authentic
 
 
-    def getLogs(self, token):
+    def getLogs(self, token, pageSize):
         self.url = current_app.config.get('URL_BASE')+"/v1/logs"
         headers = {'Authorization': token}
-        param={'pageSize':100, 'sortBy':'dtregistro', 'direction':'desc'}
+        param={'pageSize':pageSize, 'sortBy':'dtregistro', 'direction':'desc'}
         logs = []
 
         response = requests.get(self.url, headers=headers, params=param)

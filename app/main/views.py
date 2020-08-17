@@ -42,6 +42,7 @@ def sair():
     session.pop('msg', None)
     session.pop('value', None)
     session.pop('superuser', None)
+    session.pop('pageLog', None)
     return redirect(url_for('views.index'))
 
 @views.route('/recuperasenha', methods=['GET'])
@@ -70,6 +71,7 @@ def user():
                 session['nome'] = result.get("nome")
                 session['id'] = result.get("id")
                 session['superuser'] = result.get("superuser")
+                session['pageLog'] = 10               
                 return redirect(url_for('views.home'))
             else:
                 return render_template('login.html', page=result)
@@ -132,8 +134,7 @@ def adicionarSistema():
         return render_template("sistemas/sistemadetail.html", perfil=perfil, sistema=sistema, page=None)
 
     else:
-        return render_template('login.html', page=None)
-    
+        return render_template('login.html', page=None)   
     
 
 @views.route('/sistemas/registrar', methods=['POST'])
@@ -157,16 +158,28 @@ def registrarSistema():
 @views.route('/logs/<id>', methods=['GET'])
 def carregarLogs(id=None, descricao=None):
     perfil = oper.getPerfil(session.get('token'), session.get('email'))
-    
+    session['pageLog'] = 10
+
     if 'email' in session:
         if id==None:
-            logs = oper.getLogs(session.get('token'))
-            return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+            logs = oper.getLogs(session.get('token'), session.get('pageLog'))
+            return render_template('logs/logregistro.html', perfil=perfil, logs=logs)
         else:    
-            sistema = oper.getSistema(session.get('token'), id)
-            return render_template("logs/logregistrodetail.html", perfil=perfil, log=log, page=None)
+            # A FAZER
+            pass
 
     else:
         return render_template('login.html', page=None)
 
 
+@views.route('/logs/paginacao', methods=['GET'])
+def paginarLogs():
+    perfil = oper.getPerfil(session.get('token'), session.get('email'))    
+    
+    pageSize = session.get('pageLog')
+    session['pageLog'] = pageSize + 10
+    
+    logs = oper.getLogs(session.get('token'), session.get('pageLog'))
+    return render_template('logs/logregistro.html', perfil=perfil, logs=logs)
+
+    

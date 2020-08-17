@@ -51,4 +51,5 @@ class Logregistro:
         self.tipo = tipo
         self.descricao = descricao
         self.qtde = qtde
+        self.log = None
         self.sistema = sistema
