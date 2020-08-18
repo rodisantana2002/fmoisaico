@@ -99,17 +99,25 @@ class Operacoes():
         return self.authentic
 
 
-    def getLogs(self, token, pageSize):
+    def getLogs(self, token, pageSize, filters=None):
         self.url = current_app.config.get('URL_BASE')+"/v1/logs"
-        headers = {'Authorization': token}
-        param={'pageSize':pageSize, 'sortBy':'dtregistro', 'direction':'desc'}
+        headers = {'Authorization': token}        
         logs = []
 
+        if filters == None:
+            param={'pageSize':pageSize, 'sortBy':'dtregistro', 'direction':'desc'}        
+        else:            
+            param={'sortBy':'dtregistro', 'direction':'desc'}                            
+            for x, y in filters.items():                 
+                param[x] = y
+            
         response = requests.get(self.url, headers=headers, params=param)
-        j = json.loads(response.content)
-        for item in j:
-            log = Logregistro(**item)
-            logs.append(log)
+        
+        if response.status_code==200:                
+            j = json.loads(response.content)
+            for item in j:
+                log = Logregistro(**item)
+                logs.append(log)
             
         return logs
 
@@ -121,10 +129,6 @@ class Operacoes():
         response = requests.get(self.url, headers=headers)
         j = json.loads(response.content)
         logregistro = Logregistro(**j)
-        
-        # response = requests.get(self.url, headers=headers)
-        # log = response.content;
-        # logregistro.log = log
-           
+                   
         return logregistro         
     

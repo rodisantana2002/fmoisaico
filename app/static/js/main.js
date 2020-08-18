@@ -19,8 +19,8 @@
 
 
 $(document).ready(function($) {
-    //  var url_base = "http://localhost:8000/";
-    var url_base = "https://sigalogs.herokuapp.com/";
+    var url_base = "http://localhost:8000/";
+    // var url_base = "https://sigalogs.herokuapp.com/";
     //   var urlCEP = "https://viacep.com.br/ws/"
 
     if ($("#login-alerta").html() === "") {
@@ -116,8 +116,22 @@ $(document).ready(function($) {
             });
         }
     });
-    $("#btnFiltrarGeral").click(function () {      
-        alert("oi");
+    $("#btnFiltrarGeral").click(function() {
+        if ($("#txtFiltrarGeral").val().trim().length > 0) {
+            descricao = $("#txtFiltrarGeral").val().trim();
+            $(location).attr('href', url_base + 'logs/filtrar/' + descricao);
+        } else {
+            $("#txtFiltrarGeral").focus();
+        };
+    });
+
+    $("#btnFiltrarGeralDrop").click(function() {
+        if ($("#txtFiltrarGeralDrop").val().trim().length > 0) {
+            descricao = $("#txtFiltrarGeralDrop").val().trim();
+            $(location).attr('href', url_base + 'logs/filtrar/' + descricao);
+        } else {
+            $("#txtFiltrarGeralDrop").focus();
+        };
     });
 
 

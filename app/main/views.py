@@ -182,4 +182,15 @@ def paginarLogs():
     logs = oper.getLogs(session.get('token'), session.get('pageLog'))
     return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
 
+
+@views.route('/logs/filtrar/<descricao>', methods=['GET'])
+def filtrarLogsDescricao(descricao):
+    perfil = oper.getPerfil(session.get('token'), session.get('email'))    
+    
+    filters = {}
+    filters['descricao'] = descricao
+    
+    logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
+    return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+
     
