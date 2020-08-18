@@ -163,7 +163,7 @@ def carregarLogs(id=None, descricao=None):
     if 'email' in session:
         if id==None:
             logs = oper.getLogs(session.get('token'), session.get('pageLog'))
-            return render_template('logs/logregistro.html', perfil=perfil, logs=logs)
+            return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
         else:    
             log = oper.getLog(session.get('token'), id)
             return render_template('logs/logregistrodetail.html', perfil=perfil, log=log)
@@ -180,6 +180,6 @@ def paginarLogs():
     session['pageLog'] = pageSize + 10
     
     logs = oper.getLogs(session.get('token'), session.get('pageLog'))
-    return render_template('logs/logregistro.html', perfil=perfil, logs=logs)
+    return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
 
     
