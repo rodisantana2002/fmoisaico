@@ -116,6 +116,43 @@ $(document).ready(function($) {
             });
         }
     });
+    $("#btnFiltrarGeral").click(function () {      
+        alert("oi");
+    });
+
+
+    // filtra associados
+    // $("#btnFiltrarLogs").click(function () {      
+    //     categorias= [{value: '1',  text: 'BEBIDAS',},
+    //                  {value: '2',  text: 'BOLOS',},
+    //                  {value: '3',  text: 'DOCES',},
+    //                  {value: '4',  text: 'CACHORROS-QUENTES',},
+    //                  {value: '5',  text: 'HAMBURGUER',},
+    //                  {value: '6',  text: 'KITS FESTA',},
+    //                  {value: '7',  text: 'LANCHES',},
+    //                  {value: '8',  text: 'PIZZAS',},
+    //                  {value: '9',  text: 'PORÇÕES',},
+    //                  {value: '10',  text: 'REFEIÇÕES',},
+    //                  {value: '11',  text: 'SOBREMESAS',},
+    //                  {value: '12',  text: 'SALGADOS',},
+    //                  {value: '0',  text: 'TODAS',},
+    //                 ]
+    //                  bootbox.prompt({
+    //         title: "Filtrar Logs",
+    //         size: "small",
+    //         inputType: 'checkbox',
+    //         inputOptions: categorias,
+    //         callback: function (result) {
+    //             if (result != null && result != '0' && result.length>0) {
+    //                 $(location).attr('href', url_base + 'logs/' + result);                    
+    //             }
+    //             else {
+    //                 $(location).attr('href', url_base + 'logs');
+    //             }
+    //         }
+    //     });
+    // });
+
 
     // $("#btnSalvarSenha").click(function(){
     //     if(validarSenha()){

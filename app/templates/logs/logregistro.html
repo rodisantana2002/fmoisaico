@@ -11,9 +11,13 @@
         <div id="content-wrapper" class="d-flex flex-column">
 
             <div id="content">
-                {% include 'reuse/searchBar.html' %}
+                {% include 'reuse/headbar.html' %}
 
                 <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Logs</h1>
+                        <button id="btnFiltrarLogs" href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-filter fa-md text-white-300"></i><br>Filtrar</button>
+                    </div>
 
                     {% if logs|length ==0 %}
                         <hr>                                                             
