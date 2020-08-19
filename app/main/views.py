@@ -162,8 +162,37 @@ def carregarLogs(id=None, descricao=None):
 
     if 'email' in session:
         if id==None:
-            logs = oper.getLogs(session.get('token'), session.get('pageLog'))
-            return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+            if request.args.get('descricao')!=None:
+                filters = {}
+                filters['descricao'] = request.args.get('descricao')
+                
+                logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
+                return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+
+            elif request.args.get('tipo')!=None:
+                filters = {}
+                filters['tipo'] = request.args.get('tipo')
+                
+                logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
+                return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+
+            elif request.args.get('dtregistro')!=None:
+                filters = {}
+                filters['dtregistro'] = request.args.get('dtregistro')
+                
+                logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
+                return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+
+            elif request.args.get('origem')!=None:
+                filters = {}
+                filters['origem'] = request.args.get('origem')
+                
+                logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
+                return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+
+            else:
+                logs = oper.getLogs(session.get('token'), session.get('pageLog'))
+                return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
         else:    
             log = oper.getLog(session.get('token'), id)
             return render_template('logs/logregistrodetail.html', perfil=perfil, log=log)
@@ -183,25 +212,45 @@ def paginarLogs():
     return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
 
 
-@views.route('/logs/descricao/<valor>', methods=['GET'])
-def filtrarLogsDescricao(valor):
-    perfil = oper.getPerfil(session.get('token'), session.get('email'))    
+# @views.route('/logs/descricao/<valor>', methods=['GET'])
+# def filtrarLogsDescricao(valor):
+#     perfil = oper.getPerfil(session.get('token'), session.get('email'))    
     
-    filters = {}
-    filters['descricao'] = valor
+#     filters = {}
+#     filters['descricao'] = valor
     
-    logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
-    return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+#     logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
+#     return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
 
-@views.route('/logs/tipo/<valor>', methods=['GET'])
-def filtrarLogsTipo(valor):
-    perfil = oper.getPerfil(session.get('token'), session.get('email'))    
+# @views.route('/logs/tipo/<valor>', methods=['GET'])
+# def filtrarLogsTipo(valor):
+#     perfil = oper.getPerfil(session.get('token'), session.get('email'))    
     
-    filters = {}
-    filters['tipo'] = valor
+#     filters = {}
+#     filters['tipo'] = valor
     
-    logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
-    return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+#     logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
+#     return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+
+# @views.route('/logs/origem/<valor>', methods=['GET'])
+# def filtrarLogsSistema(valor):
+#     perfil = oper.getPerfil(session.get('token'), session.get('email'))    
+    
+#     filters = {}
+#     filters['origem'] = valor
+    
+#     logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
+#     return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)  
+
+# @views.route('/logs/data', methods=['GET'])
+# def filtrarLogsData():
+#     perfil = oper.getPerfil(session.get('token'), session.get('email'))    
+    
+#     filters = {}
+#     filters['dtregistro'] = request.args.get('dtregistro')
+    
+#     logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
+#     return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
 
 
     

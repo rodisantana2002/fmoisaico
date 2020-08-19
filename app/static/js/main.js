@@ -116,10 +116,20 @@ $(document).ready(function($) {
             });
         }
     });
+
+    $("#txtFiltrarGeral").change(function(){
+        if ($("#txtFiltrarGeral").val().trim().length > 0) {
+            descricao = $("#txtFiltrarGeral").val().trim();
+            $(location).attr('href', url_base + 'logs?descricao=' + descricao);
+        } else {
+            $("#txtFiltrarGeral").focus();
+        };
+    });
+
     $("#btnFiltrarGeral").click(function() {
         if ($("#txtFiltrarGeral").val().trim().length > 0) {
             descricao = $("#txtFiltrarGeral").val().trim();
-            $(location).attr('href', url_base + 'logs/descricao/' + descricao);
+            $(location).attr('href', url_base + 'logs?descricao=' + descricao);
         } else {
             $("#txtFiltrarGeral").focus();
         };
@@ -128,11 +138,20 @@ $(document).ready(function($) {
     $("#btnFiltrarGeralDrop").click(function() {
         if ($("#txtFiltrarGeralDrop").val().trim().length > 0) {
             descricao = $("#txtFiltrarGeralDrop").val().trim();
-            $(location).attr('href', url_base + 'logs/descricao/' + descricao);
+            $(location).attr('href', url_base + 'logs?descricao=' + descricao);
         } else {
             $("#txtFiltrarGeralDrop").focus();
         };
     });
+
+    $("#txtFiltrarGeralDrop").change(function(){
+        if ($("#txtFiltrarGeralDrop").val().trim().length > 0) {
+            descricao = $("#txtFiltrarGeralDrop").val().trim();
+            $(location).attr('href', url_base + 'logs?descricao=' + descricao);
+        } else {
+            $("#txtFiltrarGeralDrop").focus();
+        };
+    });    
 
     $("#btnFiltrarTipo").click(function() {
         tipos = [{ value: 'ERROR', text: 'ERROR', },
@@ -146,7 +165,7 @@ $(document).ready(function($) {
             inputOptions: tipos,
             callback: function(result) {
                 if (result != null && result != '0' && result.length > 0) {
-                    $(location).attr('href', url_base + 'logs/tipo/' + result);
+                    $(location).attr('href', url_base + 'logs?tipo=' + result);
                 } else {
                     $(location).attr('href', url_base + 'logs');
                 }
@@ -154,44 +173,34 @@ $(document).ready(function($) {
         });
     });
 
-    $("#btnFiltrarPeriodo").click(function() {});
-
-    $("#btnFiltrarSistema").click(function() {
-        alert("Sistema");
+    $("#btnFiltrarPeriodo").click(function() {
+        bootbox.prompt({
+            title: "Filtrar por Data de Registro",
+            inputType: 'date',
+            callback: function (result) {
+                if (result != null && result != '0' && result.length > 0) {
+                    $(location).attr('href', url_base + 'logs?dtregistro=' + result);
+                } else {
+                    $(location).attr('href', url_base + 'logs');
+                }
+            }
+        });        
     });
 
-
-    // filtra associados
-    // $("#btnFiltrarLogs").click(function () {      
-    //     categorias= [{value: '1',  text: 'BEBIDAS',},
-    //                  {value: '2',  text: 'BOLOS',},
-    //                  {value: '3',  text: 'DOCES',},
-    //                  {value: '4',  text: 'CACHORROS-QUENTES',},
-    //                  {value: '5',  text: 'HAMBURGUER',},
-    //                  {value: '6',  text: 'KITS FESTA',},
-    //                  {value: '7',  text: 'LANCHES',},
-    //                  {value: '8',  text: 'PIZZAS',},
-    //                  {value: '9',  text: 'PORÇÕES',},
-    //                  {value: '10',  text: 'REFEIÇÕES',},
-    //                  {value: '11',  text: 'SOBREMESAS',},
-    //                  {value: '12',  text: 'SALGADOS',},
-    //                  {value: '0',  text: 'TODAS',},
-    //                 ]
-    //                  bootbox.prompt({
-    //         title: "Filtrar Logs",
-    //         size: "small",
-    //         inputType: 'checkbox',
-    //         inputOptions: categorias,
-    //         callback: function (result) {
-    //             if (result != null && result != '0' && result.length>0) {
-    //                 $(location).attr('href', url_base + 'logs/' + result);                    
-    //             }
-    //             else {
-    //                 $(location).attr('href', url_base + 'logs');
-    //             }
-    //         }
-    //     });
-    // });
+    $("#btnFiltrarSistema").click(function() {
+        bootbox.prompt({
+            size: "small",
+            title: "Filtrar por Origem",
+            message: '<p>Informe o nome do sistema:</p>',            
+            callback: function (result) {
+                if (result != null && result != '0' && result.length > 0) {
+                    $(location).attr('href', url_base + 'logs?origem=' + result);
+                } else {
+                    $(location).attr('href', url_base + 'logs');
+                }
+            }
+        }); 
+    });
 
 
     // $("#btnSalvarSenha").click(function(){
