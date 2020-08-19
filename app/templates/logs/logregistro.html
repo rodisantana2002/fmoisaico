@@ -90,9 +90,12 @@
                                     </div>                                                            
                                 </div>
                             {% endfor %}   
-                            <div class="col-12" style="text-align:center; margin-bottom:25px">
-                                <a href="{{ url_for('views.paginarLogs')}}" name="btn-paginar" id="btn-paginar" type="link" class="btn btn-primary"><i class="fas fa-retweet"></i> MOSTRAR MAIS </a>                            
-                            </div>                      
+
+                            {% if page==True %}
+                                <div class="col-12" style="text-align:center; margin-bottom:25px">
+                                    <a href="{{ url_for('views.paginarLogs')}}" name="btn-paginar" id="btn-paginar" type="link" class="btn btn-primary"><i class="fas fa-retweet"></i> MOSTRAR MAIS </a>                            
+                                </div>                      
+                            {% endif %}
                         </div>
                     {% endif %}                               
 
