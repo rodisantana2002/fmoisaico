@@ -154,7 +154,7 @@ def registrarSistema():
         return render_template('login.html', page=None)
 
 
-@views.route('/logs', methods=['GET'])
+@views.route('/logs',  methods=['GET', 'POST'])
 @views.route('/logs/<id>', methods=['GET'])
 def carregarLogs(id=None, descricao=None):
     perfil = oper.getPerfil(session.get('token'), session.get('email'))
@@ -183,14 +183,25 @@ def paginarLogs():
     return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
 
 
-@views.route('/logs/filtrar/<descricao>', methods=['GET'])
-def filtrarLogsDescricao(descricao):
+@views.route('/logs/descricao/<valor>', methods=['GET'])
+def filtrarLogsDescricao(valor):
     perfil = oper.getPerfil(session.get('token'), session.get('email'))    
     
     filters = {}
-    filters['descricao'] = descricao
+    filters['descricao'] = valor
     
     logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
     return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+
+@views.route('/logs/tipo/<valor>', methods=['GET'])
+def filtrarLogsTipo(valor):
+    perfil = oper.getPerfil(session.get('token'), session.get('email'))    
+    
+    filters = {}
+    filters['tipo'] = valor
+    
+    logs = oper.getLogs(session.get('token'), session.get('pageLog'), filters)
+    return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+
 
     

@@ -15,8 +15,32 @@
 
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Logs</h1>
-                        <button id="btnFiltrarLogs" href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-filter fa-md text-white-300"></i><br>Filtrar</button>
+                        <h1 class="h3 mb-0 text-gray-800"> Logs</h1>
+
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" style="color:#4e73df;" href="#" id="filterDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  <i class="fas fa-filter"></i> Filtrar </a>
+                                <!-- Dropdown - Filtrar -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                    <button class="dropdown-item" id="btnFiltrarTipo">
+                                        <i class="fas fa-info fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Tipo
+                                    </button>
+
+                                    <button class="dropdown-item" id="btnFiltrarPeriodo">
+                                        <i class="fas fa-calendar-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Período
+                                    </button>
+
+                                    <button class="dropdown-item" id="btnFiltrarSistema">
+                                        <i class="fas fa-desktop fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Sistema
+                                    </button>
+                                    
+                                </div>
+                            </li>
+                        </ul>
+
                     </div>
 
                     {% if logs|length ==0 %}

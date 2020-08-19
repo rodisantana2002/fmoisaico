@@ -119,7 +119,7 @@ $(document).ready(function($) {
     $("#btnFiltrarGeral").click(function() {
         if ($("#txtFiltrarGeral").val().trim().length > 0) {
             descricao = $("#txtFiltrarGeral").val().trim();
-            $(location).attr('href', url_base + 'logs/filtrar/' + descricao);
+            $(location).attr('href', url_base + 'logs/descricao/' + descricao);
         } else {
             $("#txtFiltrarGeral").focus();
         };
@@ -128,10 +128,36 @@ $(document).ready(function($) {
     $("#btnFiltrarGeralDrop").click(function() {
         if ($("#txtFiltrarGeralDrop").val().trim().length > 0) {
             descricao = $("#txtFiltrarGeralDrop").val().trim();
-            $(location).attr('href', url_base + 'logs/filtrar/' + descricao);
+            $(location).attr('href', url_base + 'logs/descricao/' + descricao);
         } else {
             $("#txtFiltrarGeralDrop").focus();
         };
+    });
+
+    $("#btnFiltrarTipo").click(function() {
+        tipos = [{ value: 'ERROR', text: 'ERROR', },
+            { value: 'INFO', text: 'INFO', },
+            { value: 'WARNING', text: 'WARNING', }
+        ]
+        bootbox.prompt({
+            title: "Filtrar por Tipo de Log",
+            size: "small",
+            inputType: 'radio',
+            inputOptions: tipos,
+            callback: function(result) {
+                if (result != null && result != '0' && result.length > 0) {
+                    $(location).attr('href', url_base + 'logs/tipo/' + result);
+                } else {
+                    $(location).attr('href', url_base + 'logs');
+                }
+            }
+        });
+    });
+
+    $("#btnFiltrarPeriodo").click(function() {});
+
+    $("#btnFiltrarSistema").click(function() {
+        alert("Sistema");
     });
 
 
