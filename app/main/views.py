@@ -210,6 +210,6 @@ def paginarLogs():
     session['pageLog'] = pageSize + 10
     
     logs = oper.getLogs(session.get('token'), session.get('pageLog'))
-    return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=None)
+    return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=True)
 
 
