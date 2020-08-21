@@ -19,7 +19,7 @@
                         </div>
 
                         <!-- Tabela Sistema -->
-                        <div class="card shadow mb-4">
+                        <div class="card border-left-info shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Sistemas Registrados</h6>
                             </div>
@@ -30,7 +30,6 @@
                                             <tr>
                                                 <th style="text-align:center">Id</th>
                                                 <th>Nome</th>
-                                                <th>Descrição</th>
                                                 <th>Linguagem</th>
                                                 <th style="text-align:center">-</th>
                                             </tr>
@@ -40,7 +39,6 @@
                                             <tr>
                                                 <td style="text-align:center">{{sistema.id}}</td>
                                                 <td>{{sistema.nome}}</td>
-                                                <td>{{sistema.descricao}}</td>
                                                 <td>{{sistema.linguagem}}</td>
                                                 <td style="text-align:left">
                                                     <a id="btn-processo-detail" type="link" class="btn btn-link" href="{{ url_for('views.carregarSistemas', id=sistema.id)}}">

@@ -62,6 +62,41 @@ $(document).ready(function($) {
         $("#paneMenu").hide();
     });
 
+
+    $(".btn-log-remover").click(function () {
+        var log = jQuery.parseJSON($(this).val());
+
+        bootbox.confirm({
+            message: "Confirma a remoção do Log do histórico de registros?",
+            size: "small",
+            buttons: {
+                confirm: {
+                    label: 'Sim',
+                    label: '<i class="fa fa-check"></i> Confirm',                    
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'Não',
+                    label: '<i class="fa fa-times"></i> Cancel',                                        
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        type: "POST",
+                        data: { id: log.id },
+                        url: url_base + "logs/log",
+                        async: false,
+                        success: function (data) { }
+                    });
+                    $(location).attr('href', url_base + 'logs');
+                }
+            }
+        });
+    });
+
+
     $("#btnSalvarDados").click(function() {
         if (validarDados()) {
             $.ajax({
@@ -203,34 +238,6 @@ $(document).ready(function($) {
     });
 
 
-    // $("#btnSalvarSenha").click(function(){
-    //     if(validarSenha()){
-    //         $.ajax({
-    //             type: "POST",
-    //             url: url_base + "perfil/acesso",
-    //             data:{senhaAtual: $("#senhaAtual").val(), senha: $("#senha").val()},
-    //             async: false,
-    //             success: function (data) {
-    //                 if (data==="403"){
-    //                     bootbox.alert({
-    //                         message: "Senha atual não confere!",
-    //                         size: 'small'
-    //                     });                        
-    //                     $("#senhaAtual").focus();                        
-    //                 }
-    //                 else{
-    //                     bootbox.alert({
-    //                         message: "Senha alterada com sucesso!",
-    //                         size: 'small'
-    //                     });                        
-    //                     $("#senhaAtual").val("");
-    //                     $("#senha").val(""),
-    //                     $("#resenha").val("");
-    //                 }
-    //             }
-    //         });     
-    //     }        
-    // });
     $("#btn-signup").click(function() {
         if (validar()) {
             $.ajax({

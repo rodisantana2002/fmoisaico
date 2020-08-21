@@ -15,7 +15,7 @@
 
                 <div class="container-fluid">
 
-                    <div class="card shadow mb-4">
+                    <div class="card border-left-primary shadow mb-4">
                         <div class="card-header py-3">
                             <div class="col-12">
                                 <h2 style="text-align:center; color:#ac29ba"><b>{{perfil.nomecompleto}}</b></h2>                    
@@ -24,8 +24,6 @@
                         </div>
 
                         <div class="card-body">
-
-
                             <div id="paneMenu" class="container" >
                                 <div class="row">
                                     <div class="col-12">
@@ -139,7 +137,7 @@
                                                     <!-- comandos --> 
                                                     <div class="form-group" style="text-align:center; padding-right:15px; margin-bottom:10px">                                       
                                                         <div class="col-12">
-                                                            <a href="{{ url_for('views.atualizarPerfil')}}" name="btn-voltar" id="btn-voltar" type="button" class="btn btn-primary" style="border-color:gray;background-color:gray"><i class="fas fa-arrow-left"></i> Voltar </a>                            
+                                                            <a href="{{ url_for('views.atualizarPerfil')}}" name="btn-voltar" id="btn-voltar" type="link" class="btn btn-primary" style="border-color:gray;background-color:gray"><i class="fas fa-arrow-left"></i> Voltar </a>                            
                                                             <button id="btnSalvarSenha" type="button" class="btn btn-primary"> <i class="fas fa-save"></i> Salvar </button>                            
                                                         </div>
                                                     </div>    

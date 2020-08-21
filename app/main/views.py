@@ -213,3 +213,14 @@ def paginarLogs():
     return render_template('logs/logregistro.html', perfil=perfil, logs=logs, page=True)
 
 
+@views.route('/logs/log', methods=['POST'])
+def deleteItemCarrinho():
+    id = request.values.get('id')
+
+    if 'email' in session:
+        # remove item
+        result = oper.deletarLog(session.get('token'), id)
+        return result.get("code")
+
+    else:
+        return render_template('login.html', page=None)

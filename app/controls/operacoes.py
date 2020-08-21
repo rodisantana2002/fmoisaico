@@ -62,17 +62,45 @@ class Operacoes():
     def registrarSistema(self, token, sistema):
         headers = {'Authorization': token, 'content-type':'application/json'}      
 
-
         if sistema.id == '':
             strDados =  '{"nome": "' + sistema.nome +'", "descricao": "' + sistema.descricao + '", "tipo": "'+ sistema.tipo +'", "linguagem": "'+ sistema.linguagem +'"}'                    
             self.url = current_app.config.get('URL_BASE')+"/v1/sistemas"
             response = requests.post(self.url, data=strDados, headers=headers)                
         else:
-
             strDados =  '{"id": ' + sistema.id + ', "dtregistro": "' + sistema.dtregistro + '", "nome": "' + sistema.nome +'", "descricao": "' + sistema.descricao + '", "tipo": "'+ sistema.tipo +'", "linguagem": "'+ sistema.linguagem +'"}'                    
             self.url = current_app.config.get('URL_BASE')+"/v1/sistemas/" + sistema.id
             response = requests.put(self.url, data=strDados, headers=headers)                
         
+        try:
+             if response.status_code == 200:
+                 self.authentic["code"] = "200"
+                 
+             elif response.status_code ==400:
+                 self.authentic["code"] = "400"
+
+             elif response.status_code ==403:
+                 self.authentic["code"] = "403"
+
+             elif response.status_code ==415:
+                 self.authentic["code"] = "403"
+
+             elif response.status_code ==404:
+                self.authentic["code"] = "404"
+
+             # carrega a mensagem conforme erro detectado
+             self.authentic["msg"] = response.content                
+
+        except Exception as e:
+            self.authentic["code"] = "500"
+            self.authentic["msg"] = "Erro desconhecido - {}".format(e)
+
+        return self.authentic
+
+    def deletarLog(self, token, id):
+        headers = {'Authorization': token}              
+        self.url = current_app.config.get('URL_BASE')+"/v1/logs/" + id        
+        response = requests.delete(self.url, headers=headers)                
+
         try:
              if response.status_code == 200:
                  self.authentic["code"] = "200"
@@ -107,10 +135,11 @@ class Operacoes():
         if filters == None:
             param={'pageSize':pageSize, 'sortBy':'dtregistro', 'direction':'desc'}        
         else:            
-            param={'sortBy':'dtregistro', 'direction':'desc'}                            
+            pageSize = 999999999 #sem paginação quando pesquisa           
+            param={'pageSize':pageSize, 'sortBy':'dtregistro', 'direction':'desc'}                            
             for x, y in filters.items():                 
                 param[x] = y
-            
+        print(param)    
         response = requests.get(self.url, headers=headers, params=param)
         
         if response.status_code==200:                
