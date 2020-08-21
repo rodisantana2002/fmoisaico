@@ -35,6 +35,17 @@ class Dashboard:
         self.totalPorSistema=totalPorSistema
         self.totalPorTipo=totalPorTipo
 
+    def getSistemas(self):        
+        result=[]
+        
+        for key, item in self.totalPorSistema.items():
+            if item>0:
+                sistema = {"nome":key, "total":item, "percentual": (item/self.totalGeralLogs)*100}                        
+                result.append(sistema)    
+
+        return result
+
+
 class Sistema:
     def __init__(self, id, dtregistro, nome, descricao, tipo, linguagem):
         self.id = id
