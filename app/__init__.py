@@ -17,8 +17,7 @@ def create_app():
     app.config.from_mapping(SECRET_KEY=os.environ.get('SECRET_KEY') or 'key SigaLogs')
 
     app.config['URL_BASE'] = 'https://imosaico.herokuapp.com'
-   
-   
+      
     app.register_blueprint(views)
     app.register_blueprint(auth)
     app.register_blueprint(models)
