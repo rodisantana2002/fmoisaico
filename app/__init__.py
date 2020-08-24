@@ -18,16 +18,7 @@ def create_app():
 
     app.config['URL_BASE'] = 'https://imosaico.herokuapp.com'
    
-    app.config['MEDIA_ROOT'] = os.path.join(app_dir, 'gallery/')
-    
-    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-    app.config['MAIL_PORT'] = 587
-    app.config['MAIL_USERNAME'] = os.environ.get('GMAIL_USER') or 'papersrs2002@gmail.com'
-    app.config['MAIL_PASSWORD'] = os.environ.get('GMAIL_PASSWORD') or 'ujlatqnjwmprumxd'
-    app.config['MAIL_USE_TLS'] = True
-    app.config['MAIL_USE_SSL'] = False
-    app.config['MAIL_DEFAULT_SENDER'] = 'papersrs2002@gmail.com'
-
+   
     app.register_blueprint(views)
     app.register_blueprint(auth)
     app.register_blueprint(models)
